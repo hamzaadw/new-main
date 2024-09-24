@@ -7,11 +7,13 @@ require('dotenv').config();
 // Enable CORS for requests from your frontend (http://localhost:3000)
 const corsOrigin = process.env.NODE_ENV === 'production' ? 'https://your-frontend-url.vercel.app' : 'http://localhost:3000';
 
+
 app.use(cors({
-  origin: ["https://real-frontend-sandy.vercel.app/"],
-  methods:["POST","GET"],
-  credentials:true
+    origin: 'https://real-frontend-sandy.vercel.app',
+    methods: ['POST', 'GET'],
+    credentials: true,
 }));
+
 
 
 // Middleware to parse incoming JSON requests
