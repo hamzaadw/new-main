@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.navbar .nav-link:hover {
+    color: rgba(10, 134, 134, 0.664) !important;
+}
+
+.nav_bg{
+  background-color: #FFFFFF;
+}
+
+.navbar .nav-link {
+    font-size: 1.2rem;
+}
+
+.navbar-brand {
+    font-size: 1.7rem;
+    font-family: "Mulish", sans-serif;
+}
+.active{
+    /* font-weight: 500; */
+ border-bottom: 1px solid rgba(10, 134, 134, 0.664);
+ 
+}
+.btn-get-started{
+    border: 2px solid rgba(10, 134, 134, 0.664);
+padding-top: 15px;
+padding-bottom: 15px;
+    display: inline-block;
+    border-radius: 30px;
+    width: 130px;
+    text-decoration: none;
+    color: rgba(10, 134, 134, 0.664);
+  
+    letter-spacing: 1px;
+background: none;
+}
+.btn-get-started:hover{
+    transition: 0.3s ease;
+    background: rgba(10, 134, 134, 0.664);
+    border: 2px solid  rgba(10, 134, 134, 0.664);
+    color: white;
+}
+.heading{
+   
+    font-family: "Montserrat", sans-serif;
+    margin-top: -50px;
+}
+
+.para{
+    font-family: "Open Sans", sans-serif;
+  
+}
+.brandname{
+    color: rgba(16, 146, 146, 0.664);
+}
+@keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  .web-animate {
+    display: block; /* Ensure the image is a block-level element */
+    margin: 0 auto; /* Center the image horizontally */
+    animation: float 3s ease-in-out infinite;
+
+    
+  }
+  #header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Full viewport height */
+    margin-top: -70px;
+  }
+  .f{
+    font-family: "Mulish", sans-serif;
+  }
+  .feedback{
+    height: 200px;
+  }
+
+
+  .header-img {
+    position: relative;
+  }
+  
+  .mobile-img {
+    transition: transform 0.3s ease;
+  }
+  
+  @media (max-width: 767px) {
+    .mobile-img {
+      transform: translateY(100px);
+      height: 300px;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+  /* Center the TrekTech logo */
+.navbar-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Menu icon styles */
+.menu-button {
+  cursor: pointer;
+  font-size: 28px;
+}
+
+/* Drawer content styling */
+.drawer-content {
+  width: 250px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  height: 100%;
+}
+
+.drawer-content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.drawer-content li {
+  margin-bottom: 15px;
+}
+
+.drawer-content .nav-link {
+  text-decoration: none;
+  color: #333;
+}
+/* Hide the menu icon by default */
+.menu-button {
+  display: none;
+}
+
+
+
+/* Default positioning for larger screens (left-aligned) */
+.navbar-brand.left-aligned-brand {
+  position: absolute;
+  left: 20px; /* Adjust as needed */
+  transform: none;
+}
+
+/* Centered positioning for mobile screens (<= 800px) */
+.navbar-brand.centered-brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Ensure the navbar container handles the brand positioning correctly */
+.navbar {
+  position: relative;
+}
+
+/* Hide the menu icon by default */
+.menu-button {
+  display: none;
+}
+
+/* Show the menu icon on screens 800px or smaller */
+@media (max-width: 800px) {
+  .menu-button {
+    display: block;
+  }
+
+  .navbar-brand {
+    position: static; /* Override absolute positioning on small screens */
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .navbar .navbar-nav {
+    display: none; /* Hide nav links on small screens */
+  }
+
+  .navbar-extra {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 990px) {
+  .menu-button {
+    display: block;
+  }
+
+  .navbar-brand {
+    position: static;
+    margin: 0;
+    text-align: left;
+  }
+
+  .navbar .navbar-nav {
+    display: flex;
+  }
+
+  .navbar-extra {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 990px) {
+  .navbar-extra {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .navbar-brand {
+    text-align: left;
+  }
+}
+
+@media (max-width: 400px) {
+   .account-button { /* Assume account-button is the class for the login button */
+    font-size: 10px; /* Adjust the font-size or width/height as needed */
+    transition: font-size 0.3s ease; /* Smooth transition */
+  }
+}
+
+
+
+
+/* Ensure horizontal layout by default */
+#navbarNav {
+  display: flex; /* Ensure horizontal layout */
+}
+
+/* Additional styles for navbar-nav to ensure horizontal layout */
+.navbar-nav {
+  display: flex;
+  flex-direction: row; /* Ensure horizontal layout */
+}
+
+/* Hide the navbar-collapse content on small screens */
+@media (max-width: 803px) {
+  #navbarNav {
+    display: none; /* Hide the navbar-collapse content when screen width is 803px or below */
+  }
+}
+
+/* Ensure the navbar-collapse content is visible and horizontal between 803px and 992px */
+@media (min-width: 803px) and (max-width: 992px) {
+  #navbarNav {
+    display: flex; /* Ensure it is visible and horizontal */
+  }
+
+  .navbar-nav {
+    flex-direction: row; /* Ensure horizontal layout */
+  }
+}
+
+/* Make sure the nav items are spaced properly */
+.navbar-nav .nav-item {
+  margin-right: 15px; /* Space between nav items */
+}
+
+/* Handle collapsing on smaller screens (<= 800px) */
+@media (max-width: 800px) {
+  #navbarNav {
+    display: none; /* Hide content */
+  }
+
+  .menu-button {
+    display: block; /* Show menu icon */
+  }
+}
+
+
+
+/* Ensure horizontal layout by default */
+.navbar {
+  display: flex;
+  align-items: center; /* Align items vertically in the center */
+  justify-content: space-between; /* Space between brand, nav items, and icons */
+  flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+/* Center the TrekTech logo */
+.navbar-brand {
+  margin-right: auto; /* Pushes other elements to the right */
+  margin-left: -50px; /* Add some space from the left */
+}
+
+/* Nav links styling */
+#navbarNav {
+  display: flex; /* Ensure horizontal layout */
+  flex-direction: row; /* Ensure row layout */
+  align-items: center; /* Align items vertically in the center */
+}
+
+/* Ensure nav items are spaced properly */
+.navbar-nav {
+  display: flex;
+  flex-direction: row; /* Ensure horizontal layout */
+  align-items: center; /* Align items vertically in the center */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
+/* Individual nav items */
+.navbar-nav .nav-item {
+  margin: 0 15px; /* Space between nav items */
+}
+
+/* Adjust layout for medium screens (803px - 992px) */
+@media (min-width: 803px) and (max-width: 992px) {
+  .navbar {
+    justify-content: space-between; /* Ensure space between brand, nav items, and icons */
+  }
+  
+  .navbar-nav {
+    display: flex;
+    flex-direction: row; /* Ensure horizontal layout */
+    align-items: center; /* Align items vertically in the center */
+  }
+
+  .navbar-extra {
+    display: flex;
+    align-items: center;
+  }
+}
+.menu-button {
+  position: relative; /* Ensure it's positioned relative to its container */
+  z-index: 1000; /* Ensure it's on top of other elements */
+}
+.hover-bg {
+  background-color: rgb(193, 0, 64); /* Light pink background on hover */
+  border-radius: 40px; /* Optional: add some rounding to the corners */
+  transition: background-color 0.3s ease; /* Smooth transition for the background color */
+}

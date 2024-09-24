@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playwrite+BE+VLG:wght@100..400&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+.nav {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  background-color: #f8f9fa;
+  padding: 20px;
+  width: 100%;
+  position: relative;
+  overflow: hidden; /* Prevent horizontal overflow */
+}
+
+.maintitle {
+  font-family: "Playwrite BE VLG", cursive;
+  font-size: 2.5em;
+
+}
+
+
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+.cartdiv:hover svg {
+
+  color: rgba(243, 114, 157, 0.918);
+}
+
+@media (max-width: 767px) {
+  .nav-content {
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px; /* Add padding to prevent items from touching the edges */
+  }
+
+  .maintitle {
+    text-align: left;
+    flex: 1;
+    margin-right: 10px; /* Small margin to space out the title from buttons */
+  }
+
+  .search-col {
+    display: none;
+  }
+
+  .other-col {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 10px; /* Space between login and cart button */
+  }
+}
+
+@media (min-width: 768px) {
+  .maintitle {
+    text-align: left;
+    width: auto;
+    margin-right: 20px;
+  }
+
+  .nav-content {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .search-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .other-col {
+    display: flex;
+    justify-content: flex-end;
+
+  }
+}
+
+
+
+
+
+/* crousal */
+
+
+/* courasla.css */
+.carousel {
+    height: 550px; /* Set the height of the carousel */
+}
+
+.carousel-inner {
+    height: 100%; /* Ensure the inner container takes up the full height */
+}
+
+.carousel-item {
+    height: 100%; /* Ensure each item takes up the full height */
+}
+
+.carousel-image {
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}
+.carousel-indicators {
+    display: none;
+}
+
+
+
+.card{
+
+  margin-top: 40px;
+}
