@@ -8,9 +8,10 @@ require('dotenv').config();
 const corsOrigin = process.env.NODE_ENV === 'production' ? 'https://your-frontend-url.vercel.app' : 'http://localhost:3000';
 
 app.use(cors({
-  origin: corsOrigin
+  origin: ["real-frontend-sandy.vercel.app"],
+  methods:["POST","GET"],
+  credentials:true
 }));
-
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
