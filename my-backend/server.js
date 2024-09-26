@@ -9,7 +9,7 @@ const app = express();
 const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:3000';
 
 app.use(cors({
-    origin: corsOrigin,
+    origin: 'https://real-frontend-sandy.vercel.app',
     methods: ['POST', 'GET'],
     credentials: true,
 }));
@@ -23,6 +23,7 @@ app.use(express.json());
 // Route to send email with nodemailer
 app.post(`/register`, async (req, res) => {
     const { recipientEmail, subject, message, message2 } = req.body;
+    console.log('Received request:', req.body);
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
