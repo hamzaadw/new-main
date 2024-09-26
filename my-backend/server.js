@@ -1,33 +1,69 @@
 const express = require('express');
 const cors = require('cors');
-const app = express();
-const router = require('./routes/router.js');
-require('dotenv').config();
+const nodemailer = require('nodemailer');
+require('dotenv').config(); // Ensure environment variables are loaded
 
-// Enable CORS for requests from your frontend (http://localhost:3000)
+const app = express();
+
+// Enable CORS for requests from your frontend (adjust for production)
 const corsOrigin = process.env.NODE_ENV === 'production' ? 'https://your-frontend-url.vercel.app' : 'http://localhost:3000';
 
-
 app.use(cors({
-    origin: 'https://real-frontend-sandy.vercel.app',
+    origin: corsOrigin,
     methods: ['POST', 'GET'],
     credentials: true,
 }));
 
-
-
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Use your custom router
-app.use('/', router); // Ensure you’re using the correct path for your router
+// Route to send email with nodemailer
+app.post('/register', async (req, res) => {
+    const { recipientEmail, subject, message, message2 } = req.body;
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.GMAIL_USER, // Load from environment variables
+            pass: process.env.GMAIL_PASS  // Load from environment variables
+        },
+    });
+
+    const mailOptions = {
+        from: process.env.GMAIL_USER,
+        to: recipientEmail,
+        subject: subject,
+        text: message,
+    };
+
+    const mailOptionsToSender = {
+        from: process.env.GMAIL_USER,
+        to: process.env.GMAIL_USER,
+        subject: "Order Received",
+        text: `${message2}`,
+    };
+
+    try {
+        // Send the email to the recipient
+        await transporter.sendMail(mailOptions);
+
+        // Send the confirmation email to the sender
+        await transporter.sendMail(mailOptionsToSender);
+
+        res.status(200).json({ message: 'Emails sent successfully' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ message: 'Error sending email', error });
+    }
+});
 
 // Root route for basic checks
 app.get('/', (req, res) => {
     res.send('Server is running');
 });
 
-// Start server on port 5000
-app.listen(5000, () => {
-    console.log('Server is running on port 5000');
+// Start the server on port 5000 or from environment variable
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
