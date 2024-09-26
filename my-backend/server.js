@@ -21,7 +21,7 @@ app.use(express.json());
 
 
 // Route to send email with nodemailer
-app.post(`${process.env.FRONTEND_URL}/register`, async (req, res) => {
+app.post(`/register`, async (req, res) => {
     const { recipientEmail, subject, message, message2 } = req.body;
 
     const transporter = nodemailer.createTransport({
