@@ -5,8 +5,8 @@ require('dotenv').config(); // Ensure environment variables are loaded
 
 const app = express();
 
-// Enable CORS for requests from your frontend (adjust for production)
-const corsOrigin = process.env.NODE_ENV === 'production' ? 'https://your-frontend-url.vercel.app' : 'http://localhost:3000';
+// Enable CORS for requests from your frontend
+const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:3000';
 
 app.use(cors({
     origin: corsOrigin,
@@ -17,8 +17,11 @@ app.use(cors({
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
+// Rest of your code...
+
+
 // Route to send email with nodemailer
-app.post('/register', async (req, res) => {
+app.post(`${process.env.FRONTEND_URL}/register`, async (req, res) => {
     const { recipientEmail, subject, message, message2 } = req.body;
 
     const transporter = nodemailer.createTransport({
