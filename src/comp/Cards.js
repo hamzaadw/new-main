@@ -33,6 +33,7 @@ export default function Cards({ name, price, image, id, rating }) {
                         height: 280,
                         overflow: 'hidden',
                         margin: 0,
+                        marginLeft:10,
                         padding: 0,
                         borderRadius: '15px 15px 0 0',
                     }}>

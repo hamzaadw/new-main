@@ -84,98 +84,102 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
 
 
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
+    e.preventDefault(); // Prevent default form submission behavior
+    setLoading(true); // Indicate that the loading process has started
+
     try {
-      const productDetailsPromises = selectedProducts.map(async (id) => {
-        try {
-          const productRef = doc(db, 'Product', id); // 'Product' collection name is correct now
-          const productDoc = await getDoc(productRef);
-          if (productDoc.exists()) {
-            const productData = productDoc.data();
-            console.log("Product data fetched:", productData); // Debugging
-            return { id: id, name: productData.name, price: productData.price }; // Assuming the product has 'name' and 'price'
-          } else {
-            console.warn(`Product with ID ${id} not found.`);
-            return null;
-          }
-        } catch (error) {
-          console.error(`Error fetching product with ID ${id}:`, error);
-          return null;
+        // Fetch product details based on selected products
+        const productDetailsPromises = selectedProducts.map(async (id) => {
+            try {
+                const productRef = doc(db, 'Product', id); // Fetch product from Firestore
+                const productDoc = await getDoc(productRef);
+                if (productDoc.exists()) {
+                    const productData = productDoc.data();
+                    console.log("Product data fetched:", productData); // Debugging
+                    return { id: id, name: productData.name, price: productData.price }; // Assuming product has 'name' and 'price'
+                } else {
+                    console.warn(`Product with ID ${id} not found.`);
+                    return null;
+                }
+            } catch (error) {
+                console.error(`Error fetching product with ID ${id}:`, error);
+                return null;
+            }
+        });
+
+        const productDetails = await Promise.all(productDetailsPromises);
+
+        // Filter out any null values (failed fetches)
+        const filteredProductDetails = productDetails.filter((product) => product !== null);
+        if (filteredProductDetails.length === 0) {
+            throw new Error("No valid products found for this order.");
         }
-      });
-  
-      const productDetails = await Promise.all(productDetailsPromises);
-      
-      // Filter out any null values (failed fetches)
-      const filteredProductDetails = productDetails.filter((product) => product !== null);
-      if (filteredProductDetails.length === 0) {
-        throw new Error("No valid products found for this order.");
-      }
-  
-      // Proceed with order creation using the valid product details
-      const newOrderId = generateRandomString(); // Generate a random 10-character Order ID
-      
-      const newOrder = {
-        FullName: formData.fullName,
-        PhoneNumber: formData.phoneNumber,
-        City: formData.city,
-        FullAddress: formData.fullAddress,
-        townOrBlock: formData.townOrBlock,
-        email: formData.email,
-        famousPlace: formData.famousPlace,
-        OrderedBy: uid,
-        ProductId: selectedProducts,
-        OrderDetails: [{
-          OrderId: newOrderId,
-          Date: new Date(),
-          Products: filteredProductDetails, // Include the valid product details in the order
-          Status: 'Pending',
-          PaymentMethod: paymentMethod,
-        }]
-      };
-  
-      const Ref = doc(db, "Orders", uid);
-      const Doc = await getDoc(Ref);
-  
-      if (Doc.exists()) {
-        await updateDoc(Ref, {
-          Orders: arrayUnion(newOrder)
+
+        // Proceed with order creation using the valid product details
+        const newOrderId = generateRandomString(); // Generate a random 10-character Order ID
+        
+        const newOrder = {
+            FullName: formData.fullName,
+            PhoneNumber: formData.phoneNumber,
+            City: formData.city,
+            FullAddress: formData.fullAddress,
+            townOrBlock: formData.townOrBlock,
+            email: formData.email,
+            famousPlace: formData.famousPlace,
+            OrderedBy: uid,
+            ProductId: selectedProducts,
+            OrderDetails: [{
+                OrderId: newOrderId,
+                Date: new Date(),
+                Products: filteredProductDetails, // Include valid product details in the order
+                Status: 'Pending',
+                PaymentMethod: paymentMethod,
+            }]
+        };
+
+        const Ref = doc(db, "Orders", uid);
+        const Doc = await getDoc(Ref);
+
+        if (Doc.exists()) {
+            await updateDoc(Ref, {
+                Orders: arrayUnion(newOrder)
+            });
+        } else {
+            await setDoc(Ref, {
+                Orders: [newOrder]
+            });
+        }
+
+        // Send confirmation email after successfully creating the order
+        const response = await fetch('https://your-frontend-url.vercel.app/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                recipientEmail: formData.email,
+                subject: 'Order Received - Thank you for your order!',
+                message: `Dear ${formData.fullName},\n\nThank you for placing an order with us. We have noted your request and will process it soon.\n\nBest regards, [Your Company Name]`,
+                message2: `You have received an order from ${formData.fullName},\n\nOrder Details:\n${JSON.stringify(newOrder, null, 2)}\n\n`,
+            }),
         });
-      } else {
-        await setDoc(Ref, {
-          Orders: [newOrder]
-        });
-      }
-  
-      // Send confirmation email after successfully creating the order
-      await fetch('https://your-frontend-url.vercel.app/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message2: `You have received an order from ${formData.fullName},\n\nOrder Details:\n${JSON.stringify(newOrder, null, 2)}\n\n`,
-          recipientEmail: formData.email,
-          subject: 'Order Received - Thank you for your order!',
-          message: `Dear ${formData.fullName},\n\nThank you for placing an order with us. We have noted your request and will process it soon.\n\nBest regards, [Your Company Name]`,
-          orderDetails: `Order ID: ${newOrderId} \nProducts: ${filteredProductDetails.map(p => `${p.name} - $${p.price}`).join(', ')}\n`,
-        }),
-      });
-  
-      message.success("Order placed successfully!");
-  
+
+        if (response.ok) {
+            const data = await response.json();
+            message.success(data.message); // Show success message
+        } else {
+            throw new Error('Failed to send email');
+        }
+
     } catch (error) {
-      console.error("Error adding order:", error);
-      message.error("Failed to place order.");
+        console.error("Error adding order:", error);
+        message.error("Failed to place order."); // Show error message
     } finally {
-      setLoading(false);
+        setLoading(false); // Indicate that loading has finished
     }
-  };
-  
+};
+
 
 
   return (
