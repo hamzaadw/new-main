@@ -9,11 +9,10 @@ const app = express();
 const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:5000';
 
 app.use(cors({
-    origin: 'https://real-frontend-sandy.vercel.app', // Your frontend URL
-    methods: ['POST', 'GET'],
-    credentials: true,
+    origin: 'https://real-frontend-sandy.vercel.app', // Allow requests from your frontend
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'], // Add other headers if needed
 }));
-
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 

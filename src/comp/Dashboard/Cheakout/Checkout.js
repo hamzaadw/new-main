@@ -152,7 +152,7 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         }
 
         // Send confirmation email after successfully creating the order
-        const response = await fetch('https://your-frontend-url.vercel.app/register', {
+        const response = await fetch('https://backend-rust-phi.vercel.app//register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
