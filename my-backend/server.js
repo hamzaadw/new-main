@@ -21,9 +21,10 @@ app.use(express.json());
 
 
 // Route to send email with nodemailer
-app.post(`/register`, async (req, res) => {
+app.post('/register', async (req, res) => {
     const { recipientEmail, subject, message, message2 } = req.body;
-    console.log('Received request:', req.body);
+
+    console.log('Request received at /register:', req.body);
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
