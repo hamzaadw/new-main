@@ -152,25 +152,47 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         }
 
         // Send confirmation email after successfully creating the order
-        const response = await fetch('https://backend-rust-phi.vercel.app//register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                recipientEmail: formData.email,
-                subject: 'Order Received - Thank you for your order!',
-                message: `Dear ${formData.fullName},\n\nThank you for placing an order with us. We have noted your request and will process it soon.\n\nBest regards, [Your Company Name]`,
-                message2: `You have received an order from ${formData.fullName},\n\nOrder Details:\n${JSON.stringify(newOrder, null, 2)}\n\n`,
-            }),
-        });
+  
 
-        if (response.ok) {
-            const data = await response.json();
-            message.success(data.message); // Show success message
-        } else {
-            throw new Error('Failed to send email');
-        }
+
+      
+          try {
+              const response = await fetch('https://backend-rust-phi.vercel.app/register', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      recipientEmail: "recipient@example.com",
+                      subject: "Order Confirmation",
+                      message: "Your order has been placed successfully.",
+                      message2: "We have received your order and are processing it."
+                  })
+              });
+      
+              if (!response.ok) {
+                  const errorData = await response.json();
+                  throw new Error(`Error: ${errorData.message}`);
+              }
+      
+              const data = await response.json();
+              console.log("Email sent successfully:", data);
+      
+          } catch (error) {
+              console.error("Error sending email:", error);
+          }
+   
+      
+
+
+
+
+
+
+
+
+
+
 
     } catch (error) {
         console.error("Error adding order:", error);

@@ -6,18 +6,23 @@ require('dotenv').config(); // Ensure environment variables are loaded
 const app = express();
 
 // Enable CORS for requests from your frontend
-const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:5000';
+
 
 app.use(cors({
-    origin: 'https://real-frontend-sandy.vercel.app', // Allow requests from your frontend
+    origin: 'https://real-frontend-sandy.vercel.app',
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type'], // Add other headers if needed
+    allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+
+
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
 // Rest of your code...
-
+app.get('/test-cors', (req, res) => {
+    res.json({ message: 'CORS working!' });
+});
 
 // Route to send email with nodemailer
 app.post('/register', async (req, res) => {
