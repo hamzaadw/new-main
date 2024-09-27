@@ -6,10 +6,10 @@ require('dotenv').config(); // Ensure environment variables are loaded
 const app = express();
 
 // Enable CORS for requests from your frontend
-const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:3000';
+const corsOrigin = process.env.NODE_ENV === 'production' ? process.env.FRONTEND_URL : 'http://localhost:5000';
 
 app.use(cors({
-    origin: 'https://real-frontend-sandy.vercel.app',
+    origin: 'https://real-frontend-sandy.vercel.app', // Your frontend URL
     methods: ['POST', 'GET'],
     credentials: true,
 }));
