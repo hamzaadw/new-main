@@ -163,7 +163,7 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
                       'Content-Type': 'application/json',
                   },
                   body: JSON.stringify({
-                      recipientEmail: "recipient@example.com",
+                      recipientEmail:formData.email,
                       subject: "Order Confirmation",
                       message: "Your order has been placed successfully.",
                       message2: "We have received your order and are processing it."
