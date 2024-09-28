@@ -152,7 +152,27 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         }
 
         // Send confirmation email after successfully creating the order
-  
+
+
+
+        
+        const productDetailsString = filteredProductDetails.map(product => 
+          `Product Name: ${product.name}, Price: ${product.price}`
+      ).join('\n');
+
+      const message2 = `
+          Order Details:
+          Full Name: ${formData.fullName}
+          Phone Number: ${formData.phoneNumber}
+          Full Address: ${formData.fullAddress}
+          City: ${formData.city}
+          Town or Block: ${formData.townOrBlock}
+          Famous Place Near You: ${formData.famousPlace}
+          Email: ${formData.email}
+          Products Ordered:\n${productDetailsString}
+          Payment Method: ${paymentMethod}
+          Order ID: ${newOrderId}
+      `;
 
 
       
