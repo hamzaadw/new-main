@@ -155,7 +155,7 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
 
 
 
-        
+
         const productDetailsString = filteredProductDetails.map(product => 
           `Product Name: ${product.name}, Price: ${product.price}`
       ).join('\n');
@@ -186,7 +186,7 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
                       recipientEmail:formData.email,
                       subject: "Order Confirmation",
                       message: "Your order has been placed successfully.",
-                      message2: "We have received your order and are processing it."
+                      message2: message2
                   })
               });
       
