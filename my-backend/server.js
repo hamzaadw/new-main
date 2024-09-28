@@ -9,7 +9,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: 'https://real-frontend-sandy.vercel.app',
+    origin: 'https://new-main-xfd9.vercel.app',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
