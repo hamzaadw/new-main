@@ -33,21 +33,21 @@ app.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.GMAIL_USER, // Load from environment variables
-            pass: process.env.GMAIL_PASS  // Load from environment variables
+            user: "hamzaasadabcd@gmail.com", // Load from environment variables
+            pass: "rqws wlbe txgd iiec"  // Load from environment variables
         },
     });
 
     const mailOptions = {
-        from: process.env.GMAIL_USER,
+        from: "hamzaasadabcd@gmail.com",
         to: recipientEmail,
         subject: subject,
         text: message,
     };
 
     const mailOptionsToSender = {
-        from: process.env.GMAIL_USER,
-        to: process.env.GMAIL_USER,
+        from: "hamzaasadabcd@gmail.com",
+        to: "hamzaasadabcd@gmail.com",
         subject: "Order Received",
         text: `${message2}`,
     };
