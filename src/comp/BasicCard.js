@@ -62,7 +62,7 @@ export default function MediaControlCard({ detail, uid }) {
             console.log("Error adding product to cart: ", e);
         }
     };
-    
+
     console.log('Detail:', detail);
     console.log('UID:', uid);
 
@@ -94,7 +94,7 @@ export default function MediaControlCard({ detail, uid }) {
                 <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                     <CardContent sx={{ flex: '1 0 auto' }}>
                         <Typography component="div" variant="h5" sx={{
-                            fontWeight: 'bold', 
+                            fontWeight: 'bold',
                             color: '#333',
                             letterSpacing: '0.05em',  // Slight spacing for modern feel
                         }}>
@@ -122,15 +122,34 @@ export default function MediaControlCard({ detail, uid }) {
                             </Typography>
                         </div>
 
-                        <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ marginBottom: 3, width: 500, }}>
-                            <h6 style={{
-                                
-                                fontWeight: "bold",
-                                marginBottom: 8,
-                                color: '#555',  // Softer heading color
-                            }}>Product Detail:</h6>
+                        <Typography
+                            variant="subtitle1"
+                            color="text.secondary"
+                            component="div"
+                            sx={{
+                                marginBottom: 3,
+                                width: {
+                                    xs: '100%', // 100% width on extra small screens (like mobile)
+                                    sm: '100%', // 100% width on small screens (like tablets)
+                                    md: '80%',  // 80% width on medium screens
+                                    lg: '500px', // Fixed width on large screens
+                                },
+                                wordWrap: 'break-word', // Ensures long words break on small screens
+                                textAlign: 'justify', // Align text for better readability
+                            }}
+                        >
+                            <h6
+                                style={{
+                                    fontWeight: 'bold',
+                                    marginBottom: 8,
+                                    color: '#555',
+                                }}
+                            >
+                                Product Detail:
+                            </h6>
                             {detail.description}
                         </Typography>
+
 
                         <Divider style={{ margin: '20px 0' }} />
 

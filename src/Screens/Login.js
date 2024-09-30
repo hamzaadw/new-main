@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import Input from '../comp/Input';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Password } from '@mui/icons-material';
-
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../configirations/firebase';
-
+import swal from 'sweetalert'; // Import SweetAlert
 
 export default function Contact() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -27,21 +25,26 @@ export default function Contact() {
     };
 
     signInWithEmailAndPassword(auth, userdata.email, userdata.pass)
-  .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-    console.log(user)
-    setEmail('');
-    setPass('');
-    navigate("/")
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage)
-  });
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log(user);
+        setEmail('');
+        setPass('');
+        navigate("/");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
 
+        // Show SweetAlert error message
+        swal({
+          title: "Login Failed",
+          text: errorMessage,
+          icon: "error",
+          button: "Try Again",
+        });
+      });
   };
 
   return (

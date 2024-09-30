@@ -14,6 +14,7 @@ export default function Cards({ name, price, image, id, rating }) {
     return (
         <div style={{ marginTop: -30, marginBottom: 60 }} className='animation'>
             <Card sx={{
+                marginLeft:2,
                 width: 280,
                 height: 450,
                 borderRadius: '15px',
@@ -33,7 +34,7 @@ export default function Cards({ name, price, image, id, rating }) {
                         height: 280,
                         overflow: 'hidden',
                         margin: 0,
-                        marginLeft:10,
+              
                         padding: 0,
                         borderRadius: '15px 15px 0 0',
                     }}>

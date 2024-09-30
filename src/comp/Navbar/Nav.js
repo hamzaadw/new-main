@@ -15,6 +15,7 @@ const Navbarrer = () => {
   const [Cart, setCart] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,9 +31,8 @@ const Navbarrer = () => {
   useEffect(() => {
     const UserInThere = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        console.log(uid);
         setIsUser(true);
+        setUserEmail(user.email); // Store user's email
       } else {
         setIsUser(false);
       }
@@ -110,7 +110,21 @@ const Navbarrer = () => {
                     <AnchorTemporaryDrawer setCart={setCart} cart={Cart} />
                   )}
                 </motion.div>
-                {IsUser ? <Account className="account-button" /> : <CustomButton className="account-button" />}
+
+                {/* Conditionally render the image or Account button based on email */}
+                {IsUser && userEmail === "admin221@gmail.com" ? (
+                  <div className="admin-image">
+                    <img
+                      src="https://png.pngtree.com/png-clipart/20190629/original/pngtree-vector-administration-icon-png-image_4090499.jpg"
+                      alt="Admin"
+                      style={{ width: "40px", height: "40px", borderRadius: "50%" }} // Adjust the size and style as needed
+                    />
+                  </div>
+                ) : (
+                  <Account className="account-button" />
+                )}
+
+                {!IsUser && <CustomButton className="account-button" />}
               </div>
             </nav>
 
@@ -123,31 +137,36 @@ const Navbarrer = () => {
             >
               <div
                 style={{
-                  padding: '40px',
-                  paddingRight:"100px",
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  height: '100%',
+                  padding: "40px",
+                  paddingRight: "100px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  height: "100%",
                 }}
               >
-                <ul style={{ listStyleType: 'none', padding: 0, margin: 0, width: '100%' }}>
-                  {['Home', 'Services', 'About', 'Contacts'].map((text) => (
-                    <li key={text} style={{ marginBottom: '15px' }}>
+                <ul style={{ listStyleType: "none", padding: 0, margin: 0, width: "100%" }}>
+                  {[
+                    { text: "Unstiched", path: "/unstisched" },
+                    { text: "Two Piece", path: "/two-piece" },
+                    { text: "Three Piece", path: "/three-piece" },
+                    { text: "House Wear", path: "/HouseWear" }
+                  ].map((item) => (
+                    <li key={item.text} style={{ marginBottom: "15px" }}>
                       <NavLink
-                        to="/"
+                        to={item.path}
                         style={{
-                          textDecoration: 'none',
-                          color: '#000', // Change color as needed
-                          fontSize: '18px', // Adjust font size as needed
-                          display: 'block',
-                          transition: 'color 0.3s ease',
+                          textDecoration: "none",
+                          color: "#000", // Change color as needed
+                          fontSize: "18px", // Adjust font size as needed
+                          display: "block",
+                          transition: "color 0.3s ease",
                         }}
                         onClick={() => setMenuOpen(false)}
-                        onMouseEnter={(e) => (e.currentTarget.style.color = 'rgb(193, 0, 64)')} // Change color on hover
-                        onMouseLeave={(e) => (e.currentTarget.style.color = '#000')} // Revert color on leave
+                        onMouseEnter={(e) => (e.currentTarget.style.color = "rgb(193, 0, 64)")} // Change color on hover
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "#000")} // Revert color on leave
                       >
-                        {text}
+                        {item.text}
                       </NavLink>
                     </li>
                   ))}
