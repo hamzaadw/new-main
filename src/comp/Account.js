@@ -4,7 +4,7 @@ import { auth } from '../configirations/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { NavLink } from 'react-router-dom';
 
-function Account() {
+function Account({ userEmail }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [user, setUser] = useState(null);
@@ -58,7 +58,25 @@ function Account() {
           }}
         >
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <NavLink style={{textDecoration:"none", color:"black"}} to="/myorders">  <MenuItem >My orders</MenuItem></NavLink>
+          <NavLink style={{ textDecoration: "none", color: "black" }} to="/myorders">
+            <MenuItem>My Orders</MenuItem>
+          </NavLink>
+
+          {/* Only show Dashboard and Add Items if the email is admin221 */}
+          {userEmail === "admin221@gmail.com" && (
+            <>
+              <MenuItem onClick={handleClose}>
+                <NavLink to="/dashboard" style={{ textDecoration: "none", color: "inherit" }}>
+                  Dashboard
+                </NavLink>
+              </MenuItem>
+              <MenuItem onClick={handleClose}>
+                <NavLink to="/additems" style={{ textDecoration: "none", color: "inherit" }}>
+                  Add Items
+                </NavLink>
+              </MenuItem>
+            </>
+          )}
         </Menu>
       </div>
     </>
