@@ -112,17 +112,8 @@ const Navbarrer = () => {
                 </motion.div>
 
                 {/* Conditionally render the image or Account button based on email */}
-                {IsUser && userEmail === "admin221@gmail.com" ? (
-                  <div className="admin-image">
-                    <img
-                      src="https://png.pngtree.com/png-clipart/20190629/original/pngtree-vector-administration-icon-png-image_4090499.jpg"
-                      alt="Admin"
-                      style={{ width: "40px", height: "40px", borderRadius: "50%" }} // Adjust the size and style as needed
-                    />
-                  </div>
-                ) : (
-                  <Account className="account-button" />
-                )}
+                { IsUser && <Account className="account-button" />
+                }
 
                 {!IsUser && <CustomButton className="account-button" />}
               </div>
