@@ -16,11 +16,9 @@ import { Divider } from 'antd';
 
 export default function MediaControlCard({ detail, uid }) {
     const theme = useTheme();
-    const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+    const isMediumOrLarger = useMediaQuery(theme.breakpoints.up('md')); // Check if the screen is medium or larger
     const [open, setOpen] = React.useState(false);
-
     const [selectedImage, setSelectedImage] = React.useState(detail.image[0]); // State to track the large image
-
     let navigate = useNavigate();
 
     const addToCart = async () => {
@@ -65,14 +63,11 @@ export default function MediaControlCard({ detail, uid }) {
         }
     };
 
-    console.log('Detail:', detail);
-    console.log('UID:', uid);
-
     return (
         <>
             <Card sx={{
                 display: 'flex',
-                flexDirection: isLargeScreen ? 'row' : 'column',
+                flexDirection: isMediumOrLarger ? 'row' : 'column', // Row for medium and large screens, column for small
                 borderRadius: '20px',
                 boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
                 padding: '20px',
@@ -80,12 +75,12 @@ export default function MediaControlCard({ detail, uid }) {
                 overflow: 'hidden',
                 background: 'linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%)',
             }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <CardMedia
                         component="img"
                         sx={{
-                            width: isLargeScreen ? 300 : '100%',
-                            height: isLargeScreen ? 'auto' : 300,
+                            width: isMediumOrLarger ? 300 : '100%', // Full width for small screens
+                            height: isMediumOrLarger ? 'auto' : 300,
                             objectFit: 'cover',
                             borderTopLeftRadius: '20px',
                             marginBottom: 2
@@ -95,7 +90,7 @@ export default function MediaControlCard({ detail, uid }) {
                     />
 
                     {/* Small Image Thumbnails */}
-                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, marginTop: 2 }}>
                         {detail.image.map((img, index) => (
                             <CardMedia
                                 key={index}
@@ -114,101 +109,105 @@ export default function MediaControlCard({ detail, uid }) {
                             />
                         ))}
                     </Box>
+                </Box>
 
-                    <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography component="div" variant="h5" sx={{
-                            fontWeight: 'bold',
-                            color: '#333',
-                            letterSpacing: '0.05em',
+                <CardContent sx={{
+                    flex: 1,
+                    marginLeft: isMediumOrLarger ? '20px' : 0,
+                    marginTop: isMediumOrLarger ? 0 : 2,
+                }}>
+                    <Typography component="div" variant="h5" sx={{
+                        fontWeight: 'bold',
+                        color: '#333',
+                        letterSpacing: '0.05em',
+                    }}>
+                        {detail.name}
+                    </Typography>
+
+                    <Divider style={{ margin: '20px 0' }} />
+
+                    <div className='d-flex mt-4 mb-4' style={{ alignItems: 'center' }}>
+                        <span style={{
+                            marginRight: 10,
+                            textDecoration: 'line-through',
+                            color: 'grey',
+                            fontSize: '1.2rem',
+                            opacity: 0.8,
                         }}>
-                            {detail.name}
+                            PKR 3000
+                        </span>
+                        <Typography component="div" variant="h5" sx={{
+                            color: '#D8074C',
+                            fontWeight: 'bold',
+                            letterSpacing: '0.03em',
+                        }}>
+                            PKR {detail.price}
                         </Typography>
+                    </div>
 
-                        <Divider style={{ margin: '20px 0' }} />
-
-                        <div className='d-flex mt-4 mb-4' style={{ alignItems: 'center' }}>
-                            <span style={{
-                                marginRight: 10,
-                                textDecoration: 'line-through',
-                                color: 'grey',
-                                fontSize: '1.2rem',
-                                opacity: 0.8,
-                            }}>
-                                PKR 3000
-                            </span>
-                            <Typography component="div" variant="h5" sx={{
-                                color: '#D8074C',
+                    <Typography
+                        variant="subtitle1"
+                        color="text.secondary"
+                        component="div"
+                        sx={{
+                            marginBottom: 3,
+                            width: {
+                                xs: '100%',
+                                sm: '100%',
+                                md: '80%',
+                                lg: '500px',
+                            },
+                            wordWrap: 'break-word',
+                            textAlign: 'justify',
+                        }}
+                    >
+                        <h6
+                            style={{
                                 fontWeight: 'bold',
-                                letterSpacing: '0.03em',
-                            }}>
-                                PKR {detail.price}
-                            </Typography>
-                        </div>
-
-                        <Typography
-                            variant="subtitle1"
-                            color="text.secondary"
-                            component="div"
-                            sx={{
-                                marginBottom: 3,
-                                width: {
-                                    xs: '100%',
-                                    sm: '100%',
-                                    md: '80%',
-                                    lg: '500px',
-                                },
-                                wordWrap: 'break-word',
-                                textAlign: 'justify',
-                            }}
-                        >
-                            <h6
-                                style={{
-                                    fontWeight: 'bold',
-                                    marginBottom: 8,
-                                    color: '#555',
-                                }}
-                            >
-                                Product Detail:
-                            </h6>
-                            {detail.description}
-                        </Typography>
-
-                        <Divider style={{ margin: '20px 0' }} />
-
-                        <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ marginBottom: 3 }}>
-                            <h6 style={{
-                                fontWeight: "bold",
                                 marginBottom: 8,
                                 color: '#555',
-                            }}>Product Rating:</h6>
-                            <BasicRating value={detail.rating} />
-                        </Typography>
+                            }}
+                        >
+                            Product Detail:
+                        </h6>
+                        {detail.description}
+                    </Typography>
 
-                        <Box sx={{ mt: 5 }}>
-                            <Button
-                                onClick={addToCart}
-                                color="secondary"
-                                variant="contained"
-                                sx={{
-                                    backgroundColor: '#000',
-                                    fontWeight: 'bold',
-                                    color: '#fff',
-                                    '&:hover': {
-                                        backgroundColor: '#D8074C',
-                                    },
-                                    padding: '12px 24px',
-                                    borderRadius: '12px',
-                                    transition: 'background-color 0.3s ease, transform 0.3s ease',
-                                    '&:active': {
-                                        transform: 'scale(0.95)',
-                                    }
-                                }}
-                            >
-                                Add to Cart
-                            </Button>
-                        </Box>
-                    </CardContent>
-                </Box>
+                    <Divider style={{ margin: '20px 0' }} />
+
+                    <Typography variant="subtitle1" color="text.secondary" component="div" sx={{ marginBottom: 3 }}>
+                        <h6 style={{
+                            fontWeight: "bold",
+                            marginBottom: 8,
+                            color: '#555',
+                        }}>Product Rating:</h6>
+                        <BasicRating value={detail.rating} />
+                    </Typography>
+
+                    <Box sx={{ mt: 5 }}>
+                        <Button
+                            onClick={addToCart}
+                            color="secondary"
+                            variant="contained"
+                            sx={{
+                                backgroundColor: '#000',
+                                fontWeight: 'bold',
+                                color: '#fff',
+                                '&:hover': {
+                                    backgroundColor: '#D8074C',
+                                },
+                                padding: '12px 24px',
+                                borderRadius: '12px',
+                                transition: 'background-color 0.3s ease, transform 0.3s ease',
+                                '&:active': {
+                                    transform: 'scale(0.95)',
+                                }
+                            }}
+                        >
+                            Add to Cart
+                        </Button>
+                    </Box>
+                </CardContent>
             </Card>
 
             <SimpleSnackbar open={open} setOpen={setOpen} />
