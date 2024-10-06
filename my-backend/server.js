@@ -1,27 +1,24 @@
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path'); // Add this line to import the path module
 require('dotenv').config(); // Ensure environment variables are loaded
 
 const app = express();
 
 // Enable CORS for requests from your frontend
-
-
 app.use(cors({
-    origin: 'https://new-main-xfd9.vercel.app'  ,
-
+    origin: 'https://new-main-xfd9.vercel.app',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'build'))); // Serve static files from the build directory
 
 // Handle any requests that don't match the ones above
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/build/index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
@@ -40,23 +37,23 @@ app.post('/register', async (req, res) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: "hamzaasadabcd@gmail.com", // Load from environment variables
-            pass: "rqws wlbe txgd iiec"  // Load from environment variables
+            user: process.env.EMAIL_USER, // Load from environment variables
+            pass: process.env.EMAIL_PASS, // Load from environment variables
         },
     });
 
     const mailOptions = {
-        from: "hamzaasadabcd@gmail.com",
+        from: process.env.EMAIL_USER,
         to: recipientEmail,
         subject: subject,
         text: message,
     };
 
     const mailOptionsToSender = {
-        from: "hamzaasadabcd@gmail.com",
-        to: "hamzaasadabcd@gmail.com",
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_USER,
         subject: "Order Received",
-        text: `${message2}`,
+        text: message2,
     };
 
     try {
