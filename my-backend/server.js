@@ -34,15 +34,15 @@ app.post('/register', async (req, res) => {
     });
 
     const mailOptions = {
-        from: process.env.EMAIL_USER,
+        from: process.env.GMAIL_USER,
         to: recipientEmail,
         subject: subject,
         text: message,
     };
 
     const mailOptionsToSender = {
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
+        from: process.env.GMAIL_USER,
+        to:process.env.GMAIL_PASS,
         subject: "Order Received",
         text: message2,
     };
