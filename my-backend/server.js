@@ -16,14 +16,13 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, 'build'))); // Serve static files from the build directory
 
 // Handle any requests that don't match the ones above
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// Serve static files
+app.use(express.static(path.join(__dirname, 'build'))); 
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 
-// Rest of your code...
+// API endpoints
 app.get('/test-cors', (req, res) => {
     res.json({ message: 'CORS working!' });
 });
