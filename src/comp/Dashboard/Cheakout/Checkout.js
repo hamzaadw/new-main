@@ -67,24 +67,24 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-    setLoading(true); 
+    e.preventDefault(); // Prevent default form submission behavior
+    setLoading(true); // Indicate that the loading process has started
     console.log("Selected Products for Checkout:", selectedProducts);
+    
     try {
       // Fetch product details based on selected products
-      const productDetailsPromises = selectedProducts.map(async (product) => {
+      const productDetailsPromises = selectedProducts.map(async (product) => { 
         const id = product.ProductId;
         try {
-          const productRef = doc(db, 'Product', id);
+          const productRef = doc(db, 'Product', id); 
           const productDoc = await getDoc(productRef);
           if (productDoc.exists()) {
             const productData = productDoc.data();
-            console.log("Product data fetched:", productData);
             return { 
               id: id, 
               name: productData.name, 
               price: productData.price, 
-              size: product.size // Added size here
+              size: product.size // Include product size
             };
           } else {
             console.warn(`Product with ID ${id} not found.`);
@@ -95,15 +95,15 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
           return null;
         }
       });
-
+  
       const productDetails = await Promise.all(productDetailsPromises);
       const filteredProductDetails = productDetails.filter((product) => product !== null);
       if (filteredProductDetails.length === 0) {
         throw new Error("No valid products found for this order.");
       }
-
-      const newOrderId = generateRandomString(); 
-
+  
+      const newOrderId = generateRandomString(); // Generate a random 10-character Order ID
+  
       const newOrder = {
         FullName: formData.fullName,
         PhoneNumber: formData.phoneNumber,
@@ -117,15 +117,15 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         OrderDetails: [{
           OrderId: newOrderId,
           Date: new Date(),
-          Products: filteredProductDetails, 
+          Products: filteredProductDetails,
           Status: 'Pending',
           PaymentMethod: paymentMethod,
         }]
       };
-
+  
       const Ref = doc(db, "Orders", uid);
       const Doc = await getDoc(Ref);
-
+  
       if (Doc.exists()) {
         await updateDoc(Ref, {
           Orders: arrayUnion(newOrder)
@@ -135,12 +135,12 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
           Orders: [newOrder]
         });
       }
-
-      // Prepare the message for email confirmation
+  
+      // Prepare product details for the email
       const productDetailsString = filteredProductDetails.map(product => 
-        `Product Name: ${product.name}, Price: ${product.price}, Size: ${product.size}` // Added size to the message
+        `Product Name: ${product.name}, Price: ${product.price}, Size: ${product.size}` // Include size here
       ).join('\n');
-
+  
       const message2 = `
         Order Details:
         Full Name: ${formData.fullName}
@@ -154,41 +154,41 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         Payment Method: ${paymentMethod}
         Order ID: ${newOrderId}
       `;
-
+  
       try {
-        console.log(formData.email);
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            recipientEmail: formData.email,
+            recipientEmail: formData.email, // Ensure this is correctly passed
             subject: "Order Confirmation",
             message: "Your order has been placed successfully.",
             message2: message2
           })
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(`Error: ${errorData.message}`);
         }
-
+  
         const data = await response.json();
         console.log("Email sent successfully:", data);
-
+  
       } catch (error) {
         console.error("Error sending email:", error);
       }
-
+  
     } catch (error) {
       console.error("Error adding order:", error);
       message.error("Failed to place order.");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
+  
 
   return (
     <Box sx={{ padding: '2rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', maxWidth: '600px', margin: '0 auto' }}>
