@@ -19,12 +19,12 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ open, setOpen, orderId, FullName, city, PhoneNumber, famousPlace, FullAddress, email,id }) {
+export default function BasicModal({ open, setOpen, orderId, FullName, city, PhoneNumber, famousPlace, FullAddress, email, id }) {
   const handleClose = () => setOpen(false);
   const [orderData, setOrderData] = React.useState(null);
   const [productNames, setProductNames] = React.useState([]);
 
-  const [productdata, setproductdata]=React.useState([])
+  const [productdata, setproductdata] = React.useState([])
 
 
 
@@ -34,7 +34,7 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
       const ordersCollection = collection(db, 'Orders');
       const querySnapshot = await getDocs(ordersCollection);
       let fetchedOrderData = null;
-  
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         if (data.Orders && Array.isArray(data.Orders)) {
@@ -43,26 +43,29 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
               order.OrderDetails.forEach((detail) => {
                 if (detail.OrderId === orderId) {
                   const products = detail.Products || [];
-                  const productIds = products.map(product => product.id); // Assuming each product has a ProductId
-  
+                  // Extract product IDs and sizes from products
+                  const productDetails = products.map(product => ({
+                    id: product.id,
+                    size: product.size, // Assuming 'size' exists in your product data structure
+                  }));
+
                   fetchedOrderData = {
                     OrderedBy: doc.id,
                     orderId: detail.OrderId,
-                    productIds: productIds, // Store array of product IDs
+                    productDetails: productDetails, // Store array of objects with id and size
                     orderDate: new Date(detail.Date.seconds * 1000).toDateString(),
                     status: detail.Status || 'Pending',
                   };
-                  console.log(productIds)
                 }
               });
             }
           });
         }
       });
-  
+
       if (fetchedOrderData) {
         setOrderData(fetchedOrderData);
-        fetchProductDetails(fetchedOrderData.productIds); // Fetch product details using product IDs
+        fetchProductDetails(fetchedOrderData.productDetails); // Fetch product details using product IDs and sizes
       } else {
         setOrderData(null);
       }
@@ -72,34 +75,38 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
     }
   };
 
-  
 
 
 
-  const fetchProductDetails = async (productIds) => {
+  const fetchProductDetails = async (productDetails) => {
     try {
-      const productDetailsPromises = productIds.map(async (id) => {
-        const productRef = doc(db, 'Product', id); // Assumes your collection is named 'Product'
+      const productDetailsPromises = productDetails.map(async (productDetail) => {
+        const productRef = doc(db, 'Product', productDetail.id); // Assumes your collection is named 'Product'
         const productDoc = await getDoc(productRef);
         if (productDoc.exists()) {
           const productData = productDoc.data();
-          console.log(`Product data for ID ${id}:`, productData);
-          setproductdata(productData)  
-          return productData.name;
+          console.log(`Product data for ID ${productDetail.id}:`, productData);
+          setproductdata(productData);
+          return {
+            name: productData.name,
+            price: productData.price,
+            size: productDetail.size, // Include size in the returned product data
+          };
         } else {
-          console.warn(`Product with ID ${id} not found.`);
+          console.warn(`Product with ID ${productDetail.id} not found.`);
           return null;
         }
       });
 
-      const productDetails = await Promise.all(productDetailsPromises);
-      const validProductNames = productDetails.filter(name => name !== null); // Filter out any null values
-      setProductNames(validProductNames); // Store the product names in state
-      console.log("All fetched product names:", validProductNames);
+      const productDetailsWithSizes = await Promise.all(productDetailsPromises);
+      const validProductNames = productDetailsWithSizes.filter(product => product !== null); // Filter out any null values
+      setProductNames(validProductNames); // Store the product names and sizes in state
+      console.log("All fetched product names and sizes:", validProductNames);
     } catch (error) {
       console.error('Error fetching product details:', error);
     }
   };
+
 
   React.useEffect(() => {
     if (open && orderId) {
@@ -168,10 +175,16 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
             {orderData && (
               <>
                 <Grid item xs={6}>
-                  <Typography variant="body1"><strong>Product Ordered:</strong></Typography>
+                  <Typography variant="body1"><strong>Products Ordered:</strong></Typography>
                 </Grid>
                 <Grid item xs={6}>
-                  <Typography variant="body1">{productNames.join(', ')}</Typography> {/* Display product names */}
+                  <Typography variant="body1">
+                    {productNames.map((product, index) => (
+                      <div key={index}>
+                        {product.name} (Size: {product.size})
+                      </div>
+                    ))}
+                  </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
@@ -187,6 +200,7 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
                 <Grid item xs={6}>
                   <Typography variant="body1">{productdata.price} Rs</Typography>
                 </Grid>
+
                 <Grid item xs={6}>
                   <Typography variant="body1"><strong>Status:</strong></Typography>
                 </Grid>
@@ -195,6 +209,7 @@ export default function BasicModal({ open, setOpen, orderId, FullName, city, Pho
                 </Grid>
               </>
             )}
+
           </Grid>
         </Box>
       </Modal>

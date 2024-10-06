@@ -85,6 +85,7 @@ const Layout = ({setOpen, open}) => {
                       productId:  product.id || 'Unknown ID', // Check if this is actually defined
                       productName: product.name, 
                       productPrice: product.price, 
+                      productSize: product.size, 
                       orderId: orderDetails.OrderId,
                       orderDate: new Date(orderDetails.Date.seconds * 1000).toDateString(),
                       status: orderDetails.Status || 'Pending',
