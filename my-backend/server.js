@@ -13,19 +13,11 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use(express.static(path.join(__dirname, 'build'))); // Serve static files from the build directory
 
-// Handle any requests that don't match the ones above
-// Serve static files
-app.use(express.static(path.join(__dirname, 'build'))); 
-
-// Middleware to parse incoming JSON requests
 app.use(express.json());
 
 // API endpoints
-app.get('/test-cors', (req, res) => {
-    res.json({ message: 'CORS working!' });
-});
+
 
 // Route to send email with nodemailer
 app.post('/register', async (req, res) => {
