@@ -13,18 +13,29 @@ import SimpleSnackbar from './addtocartNotification/Notification';
 import { useNavigate } from 'react-router-dom';
 import BasicRating from './rating';
 import { Divider } from 'antd';
+import { MenuItem, FormControl, InputLabel, Select } from '@mui/material';
 
 export default function MediaControlCard({ detail, uid }) {
     const theme = useTheme();
-    const isMediumOrLarger = useMediaQuery(theme.breakpoints.up('md')); // Check if the screen is medium or larger
+    const isMediumOrLarger = useMediaQuery(theme.breakpoints.up('md'));
     const [open, setOpen] = React.useState(false);
-    const [selectedImage, setSelectedImage] = React.useState(detail.image[0]); // State to track the large image
+    const [selectedImage, setSelectedImage] = React.useState(detail.image[0]);
+    const [selectedSize, setSelectedSize] = React.useState(''); // Track selected size
     let navigate = useNavigate();
 
     const addToCart = async () => {
         if (!uid) {
             console.error("User is not logged in or UID is undefined");
             navigate("/login");
+            return;
+        }
+
+        // If sizes array contains "none", allow adding to cart without a selected size
+        if (detail.sizes.includes('none')) {
+            // If sizes include 'none', set selectedSize to 'none'
+            setSelectedSize('none');
+        } else if (!selectedSize) {
+            alert("Please select a size before adding to the cart!");
             return;
         }
 
@@ -40,6 +51,7 @@ export default function MediaControlCard({ detail, uid }) {
                         ProductDescription: detail.description,
                         ProductPrice: detail.price,
                         ProductImage: detail.image,
+                        ProductSize: selectedSize, // Include the selected size
                     })
                 });
             } else {
@@ -51,6 +63,7 @@ export default function MediaControlCard({ detail, uid }) {
                             ProductDescription: detail.description,
                             ProductPrice: detail.price,
                             ProductImage: detail.image,
+                            ProductSize: selectedSize, // Include the selected size
                         }
                     ]
                 });
@@ -67,7 +80,7 @@ export default function MediaControlCard({ detail, uid }) {
         <>
             <Card sx={{
                 display: 'flex',
-                flexDirection: isMediumOrLarger ? 'row' : 'column', // Row for medium and large screens, column for small
+                flexDirection: isMediumOrLarger ? 'row' : 'column',
                 borderRadius: '20px',
                 boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
                 padding: '20px',
@@ -79,17 +92,16 @@ export default function MediaControlCard({ detail, uid }) {
                     <CardMedia
                         component="img"
                         sx={{
-                            width: isMediumOrLarger ? 300 : '100%', // Full width for small screens
+                            width: isMediumOrLarger ? 300 : '100%',
                             height: isMediumOrLarger ? 'auto' : 300,
                             objectFit: 'cover',
                             borderTopLeftRadius: '20px',
                             marginBottom: 2
                         }}
-                        image={selectedImage}  // Display the selected image
+                        image={selectedImage}
                         alt="Product image"
                     />
 
-                    {/* Small Image Thumbnails */}
                     <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, marginTop: 2 }}>
                         {detail.image.map((img, index) => (
                             <CardMedia
@@ -100,12 +112,12 @@ export default function MediaControlCard({ detail, uid }) {
                                     height: 60,
                                     objectFit: 'cover',
                                     cursor: 'pointer',
-                                    border: selectedImage === img ? '2px solid #D8074C' : '2px solid transparent',  // Highlight selected image
+                                    border: selectedImage === img ? '2px solid #D8074C' : '2px solid transparent',
                                     borderRadius: '8px'
                                 }}
                                 image={img}
                                 alt={`Thumbnail ${index}`}
-                                onClick={() => setSelectedImage(img)}  // Set the large image when clicked
+                                onClick={() => setSelectedImage(img)}
                             />
                         ))}
                     </Box>
@@ -172,6 +184,27 @@ export default function MediaControlCard({ detail, uid }) {
                         </h6>
                         {detail.description}
                     </Typography>
+
+
+
+{/*   // Size Dropdown */}
+                    {!(detail.sizes && detail.sizes.includes('None')) && detail.sizes.length > 0 ? (
+                        <FormControl fullWidth sx={{ marginBottom: 3, width: 200 }}>
+                            <InputLabel id="size-label">Select Size</InputLabel>
+                            <Select
+                                labelId="size-label"
+                                value={selectedSize}
+                                onChange={(e) => setSelectedSize(e.target.value)}
+                                required
+                            >
+                                {detail.sizes.map((size, index) => (
+                                    <MenuItem key={index} value={size}>{size}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    ) : null}
+
+
 
                     <Divider style={{ margin: '20px 0' }} />
 

@@ -1,11 +1,16 @@
 import { Formik } from 'formik';
-import { Input, Select, Form, Button, Upload } from 'antd';
+import { Input, Select, Form, Button, Upload, Checkbox } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { collection, addDoc, doc, updateDoc, Timestamp } from "firebase/firestore"; 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { db, storage } from '../configirations/firebase'; // Ensure the correct path to your Firestore config
+
+// Function to handle the selection of product size
+const handleSizeChange = (checkedValues, setFieldValue) => {
+  setFieldValue('sizes', checkedValues);
+};
 
 const handleChanger = (value, setFieldValue) => {
   setFieldValue('category', value);
@@ -17,6 +22,7 @@ const normFile = (e) => {
   }
   return e && e.fileList;
 };
+
 const submit = async (values) => {
   try {
     console.log('Starting file uploads...');
@@ -56,8 +62,8 @@ const submit = async (values) => {
       category: values.category,
       description: values.description,
       image: uploadURLs, // Save the array of download URLs
-      productDate:   Timestamp.now()
-
+      sizes: values.sizes, // Save the selected sizes array
+      productDate: Timestamp.now()
     });
 
     console.log("Document added with ID: ", docRef.id);
@@ -72,7 +78,6 @@ const submit = async (values) => {
   }
 };
 
-
 const AddItems = () => (
   <div className='container-fluid'>
     <div className='row'>
@@ -80,7 +85,7 @@ const AddItems = () => (
         <div>
           <h1>Add a new product</h1>
           <Formik
-            initialValues={{ category: '', name: '', price: '', rating:"", description: '', upload: [] }}
+            initialValues={{ category: '', name: '', price: '', rating: '', description: '', upload: [], sizes: [] }}
             validate={values => {
               const errors = {};
               if (!values.name) {
@@ -169,6 +174,21 @@ const AddItems = () => (
                     onBlur={handleBlur}
                     value={values.description}
                     placeholder="Enter item description"
+                  />
+                </Form.Item>
+
+                {/* Checkbox section for Sizes */}
+                <Form.Item label="Size">
+                  <Checkbox.Group
+                    options={[
+                      { label: 'Small', value: 'Small' },
+                      { label: 'Large', value: 'Large' },
+                      { label: 'XL', value: 'XL' },
+                      { label: 'XXL', value: 'XXL' },
+                      { label: 'None', value: 'None' }
+                    ]}
+                    value={values.sizes}
+                    onChange={(checkedValues) => handleSizeChange(checkedValues, setFieldValue)}
                   />
                 </Form.Item>
 

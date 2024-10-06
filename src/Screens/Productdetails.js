@@ -12,24 +12,18 @@ const ProductDetailsPage = () => {
     const [detail, setDetail] = useState(null);
     const [uid, setUid] = useState(null);
 
-
     useEffect(() => {
         const UserInThere = onAuthStateChanged(auth, (user) => {
           if (user) {
             const uid = user.uid;
-        
             console.log(uid);
-       
             setUid(uid);
           } else {
-            console.log("not found")
-           
+            console.log("not found");
           }
         });
         return UserInThere;
       }, []);
-
-
 
     useEffect(() => {
         const fetchProductDetail = async () => {
@@ -55,7 +49,8 @@ const ProductDetailsPage = () => {
         <Navbarrer/>
         <div>
             {detail ? <MediaControlCard detail={detail} uid={uid} /> : <p>Loading...</p>}
-        </div></>
+        </div>
+        </>
     );
 };
 

@@ -87,26 +87,27 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     setLoading(true); // Indicate that the loading process has started
-
+    console.log("Selected Products for Checkout:", selectedProducts);
     try {
-        // Fetch product details based on selected products
-        const productDetailsPromises = selectedProducts.map(async (id) => {
-            try {
-                const productRef = doc(db, 'Product', id); // Fetch product from Firestore
-                const productDoc = await getDoc(productRef);
-                if (productDoc.exists()) {
-                    const productData = productDoc.data();
-                    console.log("Product data fetched:", productData); // Debugging
-                    return { id: id, name: productData.name, price: productData.price }; // Assuming product has 'name' and 'price'
-                } else {
-                    console.warn(`Product with ID ${id} not found.`);
-                    return null;
-                }
-            } catch (error) {
-                console.error(`Error fetching product with ID ${id}:`, error);
-                return null;
-            }
-        });
+      // Fetch product details based on selected products
+      const productDetailsPromises = selectedProducts.map(async (product) => { // Change here
+          const id = product.ProductId; // Extracting ProductId from the product object
+          try {
+              const productRef = doc(db, 'Product', id); // Fetch product from Firestore
+              const productDoc = await getDoc(productRef);
+              if (productDoc.exists()) {
+                  const productData = productDoc.data();
+                  console.log("Product data fetched:", productData); // Debugging
+                  return { id: id, name: productData.name, price: productData.price, size: product.size }; // Assuming product has 'name' and 'price'
+              } else {
+                  console.warn(`Product with ID ${id} not found.`);
+                  return null;
+              }
+          } catch (error) {
+              console.error(`Error fetching product with ID ${id}:`, error);
+              return null;
+          }
+      });
 
         const productDetails = await Promise.all(productDetailsPromises);
 

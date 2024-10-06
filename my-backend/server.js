@@ -9,11 +9,18 @@ const app = express();
 
 
 app.use(cors({
-    origin: 'https://new-main-xfd9.vercel.app',
+    origin: 'https://new-main-xfd9.vercel.app'  ,
+
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Handle any requests that don't match the ones above
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
+});
 
 
 // Middleware to parse incoming JSON requests

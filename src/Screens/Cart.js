@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { auth, db } from '../configirations/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from "firebase/firestore";
@@ -16,11 +16,11 @@ function Cart() {
   const [True, setTrue] = React.useState(false);
   const [check, setCheck] = React.useState(false);
   const [totalPrice, setTotalPrice] = React.useState(0);
-  const [selectedProducts, setSelectedProducts] = React.useState([]);
+  const [selectedProducts, setSelectedProducts] = React.useState([]); // Adjusted
   const [Userid, setUserid] = React.useState(null);
   const [data, setdata] = React.useState(null);
 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const deliveryFee = 250; // Fixed delivery fee
 
@@ -47,19 +47,23 @@ function Cart() {
     });
     return unsubscribe;
   }, []);
-
   const updateTotalPrice = (price, isChecked, product) => {
     setTotalPrice((oldValue) => (isChecked ? oldValue + price : oldValue - price));
+    
     if (isChecked) {
-      setSelectedProducts((prev) => [...prev, product]);
-      setCheck(true);
+        // Include Product ID and Size when adding to selectedProducts
+        setSelectedProducts((prev) => [...prev, { ProductId: product.ProductId, size: product.ProductSize }]);
+        setCheck(true);
     } else {
-      setSelectedProducts((prev) => {
-        const updatedProducts = prev.filter((item) => item.ProductId !== product.ProductId);
-        setCheck(updatedProducts.length > 0);
-        return updatedProducts;
-      });
+        setSelectedProducts((prev) => {
+            const updatedProducts = prev.filter((item) => item.ProductId !== product.ProductId);
+            setCheck(updatedProducts.length > 0);
+            return updatedProducts;
+        });
     }
+ // <- This closing brace is misplaced
+
+  
   };
 
   const formatPrice = (price) => {
@@ -74,13 +78,10 @@ function Cart() {
     return totalPrice + deliveryFee;
   };
 
-
-
-let getselectedpaymentmethod=(data)=>{
-console.log(data)
-setdata(data)
-}
-
+  let getselectedpaymentmethod = (data) => {
+    console.log(data);
+    setdata(data);
+  };
 
   return (
     <Box sx={{ padding: '2rem', background: 'linear-gradient(135deg, #f9f9f9 30%, #ececec 100%)', minHeight: '100vh' }}>
@@ -135,6 +136,12 @@ setdata(data)
               }}
             >
               <CartCard updateTotalPrice={updateTotalPrice} products={product} />
+              {/* Displaying the Product Size */}
+              {product.ProductSize && (
+                <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
+                  Size: {product.ProductSize}
+                </Typography>
+              )}
             </Paper>
           ))
         ) : (
@@ -191,7 +198,7 @@ setdata(data)
         )}
 
         {check && True && (
-          <PaymentMethods getselectedpaymentmethod={getselectedpaymentmethod}/>
+          <PaymentMethods getselectedpaymentmethod={getselectedpaymentmethod} />
         )}
         {check && True && (
           <Checkout paymentMethod={data} selectedProducts={selectedProducts} uid={Userid} />

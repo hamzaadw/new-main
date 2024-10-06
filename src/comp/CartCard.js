@@ -13,12 +13,15 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
   const [checked, setChecked] = React.useState(false);
   const [count, setCount] = React.useState(1);
 
-
-
   const handleCheckbox = (e) => {
     const isChecked = e.target.checked;
     setChecked(isChecked);
-    updateTotalPrice(products.ProductPrice * count, isChecked, products.ProductId);
+    
+    // Update total price with the selected size
+    updateTotalPrice(products.ProductPrice * count, isChecked, {
+      ProductId: products.ProductId,
+      ProductSize: products.ProductSize, // Add this line to send the selected size
+    });
   };
 
   return (
@@ -32,7 +35,7 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
             '&.Mui-checked': {
               color: theme.palette.primary.main,
             },
-            mr: 2
+            mr: 2,
           }}
         />
       )}
@@ -67,14 +70,19 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
           },
         }}>
           <CardContent sx={{ flex: '1 0 auto', padding: '8px' }}>
-            <Typography component="div" variant="h6" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight:"bold" }}>
+            <Typography component="div" variant="h6" sx={{ fontFamily: 'Roboto, sans-serif', fontWeight: "bold" }}>
               {products.ProductName}
             </Typography>
             <Typography style={{ marginTop: 10 }} variant="subtitle1" color="textPrimary" component="div">
               PKR. {products.ProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Typography>
+            {/* Display the size field here */}
+            {products.ProductSize && ( // Check if ProductSize exists
+              <Typography variant="body2" color="textSecondary" component="div" style={{ marginTop: 5 }}>
+                Size: {products.ProductSize}
+              </Typography>
+            )}
           </CardContent>
-        
         </Box>
       </Card>
     </div>
