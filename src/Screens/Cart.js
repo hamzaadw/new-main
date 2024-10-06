@@ -47,6 +47,9 @@ function Cart() {
     });
     return unsubscribe;
   }, []);
+
+
+  
   const updateTotalPrice = (price, isChecked, product) => {
     setTotalPrice((oldValue) => (isChecked ? oldValue + price : oldValue - price));
     
