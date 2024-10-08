@@ -140,11 +140,16 @@ function Cart() {
             >
               <CartCard updateTotalPrice={updateTotalPrice} products={product} />
               {/* Displaying the Product Size */}
-              {product.ProductSize && (
+
+
+
+              {/* {product.ProductSize && (
                 <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
                   Size: {product.ProductSize}
                 </Typography>
-              )}
+              )} */}
+
+              
             </Paper>
           ))
         ) : (

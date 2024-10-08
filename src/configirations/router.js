@@ -10,11 +10,15 @@ import AddItems from '../Screens/AddItems';
 import Dashboard from '../Screens/Dashbord';
 import Myorders from '../Screens/Myorders';
 
-import Twopiece from '../Screens/catogries/2piece';
-import Threepiece from '../Screens/catogries/3piece';
-import HouseWear from '../Screens/catogries/house wear';
-import Uunstiched from '../Screens/catogries/unstiched';
+import Pant from '../Screens/catogries/Pant';
+import Hoodies from '../Screens/catogries/Hoodies';
+import T_shirt from '../Screens/catogries/T_shirt';
+import Shirt from '../Screens/catogries/Shirts';
+import Stitched from '../Screens/catogries/stiched';
+import Unstitched from '../Screens/catogries/Unstitched';
+
 import ProductDetails from '../Screens/Productdetails';
+
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../configirations/firebase';
@@ -55,11 +59,18 @@ function Router() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Myorders" element={<Myorders />} />
 
-          <Route path="/unstisched" element={<Uunstiched />} />
-          <Route path="/two-piece" element={<Twopiece />} />
-          <Route path="/three-piece" element={<Threepiece />} />
+
+         
+   
+          <Route path="/T_shirts" element={<T_shirt />} />
+          <Route path="/Pants" element={<Pant />} />
+          <Route path="/Hoodies" element={<Hoodies />} />
+          <Route path="/shirts" element={<Shirt />} />
+          <Route path="/Stitched" element={<Stitched />} />
+          <Route path="/Unstitched" element={<Unstitched />} />
+
           <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/HouseWear" element={<HouseWear />} />
+  
 
           {/* Protected Routes for Admin */}
           <Route 

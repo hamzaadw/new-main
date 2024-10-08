@@ -92,8 +92,8 @@ export default function MediaControlCard({ detail, uid }) {
                     <CardMedia
                         component="img"
                         sx={{
-                            width: isMediumOrLarger ? 300 : '100%',
-                            height: isMediumOrLarger ? 'auto' : 300,
+                            width: 310,  // Fixed width of 300px
+                            height: 500,  // Fixed height of 500px
                             objectFit: 'cover',
                             borderTopLeftRadius: '20px',
                             marginBottom: 2
@@ -187,7 +187,7 @@ export default function MediaControlCard({ detail, uid }) {
 
 
 
-{/*   // Size Dropdown */}
+                    {/*   // Size Dropdown */}
                     {!(detail.sizes && detail.sizes.includes('None')) && detail.sizes.length > 0 ? (
                         <FormControl fullWidth sx={{ marginBottom: 3, width: 200 }}>
                             <InputLabel id="size-label">Select Size</InputLabel>

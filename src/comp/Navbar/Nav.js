@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-import { Drawer, IconButton } from "@mui/material";
+import { Drawer, IconButton, MenuItem } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { motion } from "framer-motion";
@@ -65,36 +65,49 @@ const Navbarrer = () => {
               {/* Nav Links (collapsed on small screens) */}
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  <li className="nav-item">
-                    <NavLink to="/" className="nav-link hover-bg">
-                      Home
+                  {/* Men Link with Dropdown */}
+                  <NavLink to="/" className="nav-link hover-bg" style={{ cursor: "pointer" }}>
+                    Home
+                  </NavLink>
+                  <li className="nav-item dropdown-hover" style={{ position: "relative" }}>
+                    <NavLink to="#" className="nav-link hover-bg" style={{ cursor: "pointer" }}>
+                      Men
                     </NavLink>
+                    <div className="dropdown-content" style={dropdownStyle}>
+                      <MenuItem component={NavLink} to="/pants" style={menuItemStyle}>
+                        Pants
+                      </MenuItem>
+                      <MenuItem component={NavLink} to="/t_shirts" style={menuItemStyle}>
+                        T-Shirts
+                      </MenuItem>
+                      <MenuItem component={NavLink} to="/shirts" style={menuItemStyle}>
+                        Shirts
+                      </MenuItem>
+                      <MenuItem component={NavLink} to="/hoodies" style={menuItemStyle}>
+                        Hoodies
+                      </MenuItem>
+                    </div>
                   </li>
-                  <li className="nav-item">
-                    <NavLink to="/unstisched" className="nav-link hover-bg">
-                      Unstiched
+
+                  {/* Women Link with Dropdown */}
+                  <li className="nav-item dropdown-hover" style={{ position: "relative" }}>
+                    <NavLink to="#" className="nav-link hover-bg" style={{ cursor: "pointer" }}>
+                      Women
                     </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/two-piece" className="nav-link hover-bg">
-                      Two Piece
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/three-piece" className="nav-link hover-bg">
-                      Three Piece
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink to="/HouseWear" className="nav-link hover-bg">
-                      House Wear
-                    </NavLink>
+                    <div className="dropdown-content" style={dropdownStyle}>
+                      <MenuItem component={NavLink} to="/stitched" style={menuItemStyle}>
+                        Stitched
+                      </MenuItem>
+                      <MenuItem component={NavLink} to="/unstitched" style={menuItemStyle}>
+                        Unstitched
+                      </MenuItem>
+                    </div>
                   </li>
                 </ul>
               </div>
 
               {/* Wrapper for Account and Cart Icon */}
-              <div className="navbar-extra d-flex align-items-center ">
+              <div className="navbar-extra d-flex align-items-center">
                 <motion.div
                   className="cartdiv ms-2"
                   initial={{ scale: 0 }}
@@ -106,19 +119,16 @@ const Navbarrer = () => {
                   }}
                 >
                   <LocalMallIcon onClick={() => setCart(true)} />
-                  {Cart && (
-                    <AnchorTemporaryDrawer setCart={setCart} cart={Cart} />
-                  )}
+                  {Cart && <AnchorTemporaryDrawer setCart={setCart} cart={Cart} />}
                 </motion.div>
 
                 {/* Conditionally render the image or Account button based on email */}
                 {IsUser && <Account userEmail={userEmail} />}
                 {!IsUser && <CustomButton className="account-button" />}
-
               </div>
             </nav>
 
-            {/* Drawer (menu) - Opens from the Left */}
+            {/* Drawer (menu) - Opens from the Left for Mobile */}
             <Drawer
               anchor="left"
               open={menuOpen}
@@ -135,39 +145,87 @@ const Navbarrer = () => {
                   height: "100%",
                 }}
               >
-                <ul style={{ listStyleType: "none", padding: 0, margin: 0, width: "100%" }}>
-                  {[
-                    { text: "Unstiched", path: "/unstisched" },
-                    { text: "Two Piece", path: "/two-piece" },
-                    { text: "Three Piece", path: "/three-piece" },
-                    { text: "House Wear", path: "/HouseWear" }
-                  ].map((item) => (
-                    <li key={item.text} style={{ marginBottom: "15px" }}>
-                      <NavLink
-                        to={item.path}
-                        style={{
-                          textDecoration: "none",
-                          color: "#000", // Change color as needed
-                          fontSize: "18px", // Adjust font size as needed
-                          display: "block",
-                          transition: "color 0.3s ease",
-                        }}
-                        onClick={() => setMenuOpen(false)}
-                        onMouseEnter={(e) => (e.currentTarget.style.color = "rgb(193, 0, 64)")} // Change color on hover
-                        onMouseLeave={(e) => (e.currentTarget.style.color = "#000")} // Revert color on leave
-                      >
-                        {item.text}
-                      </NavLink>
-                    </li>
-                  ))}
+                {/* Men Section in Drawer */}
+                <h4>Men</h4>
+                <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+                  <li>
+                    <NavLink to="/pants" onClick={() => setMenuOpen(false)}>
+                      Pants
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/t_shirts" onClick={() => setMenuOpen(false)}>
+                      T-Shirts
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/shirts" onClick={() => setMenuOpen(false)}>
+                      Shirts
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/hoodies" onClick={() => setMenuOpen(false)}>
+                      Hoodies
+                    </NavLink>
+                  </li>
+                </ul>
+
+                {/* Women Section in Drawer */}
+                <h4>Women</h4>
+                <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+                  <li>
+                    <NavLink to="/stitched" onClick={() => setMenuOpen(false)}>
+                      Stitched
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/unstitched" onClick={() => setMenuOpen(false)}>
+                      Unstitched
+                    </NavLink>
+                  </li>
                 </ul>
               </div>
             </Drawer>
           </div>
         </div>
       </div>
+
+      {/* Inline CSS to handle hover display */}
+      <style>
+        {`
+          .nav-item:hover .dropdown-content {
+            display: block !important;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+          }
+          .dropdown-content {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease-in-out;
+          }
+          .nav-link:hover {
+            color: rgba(243, 114, 157, 0.918);
+            transition: color 0.3s ease-in-out;
+          }
+        `}
+      </style>
     </>
   );
 };
+
+const dropdownStyle = {
+  display: "none",
+  position: "absolute",
+  backgroundColor: "#fff",
+  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
+  zIndex: 1,
+  padding: "15px",
+  borderRadius: "8px",
+  transition: "all 0.3s ease-in-out",
+};
+
+const menuItemStyle = { padding: "10px 20px", cursor: "pointer" };
 
 export default Navbarrer;

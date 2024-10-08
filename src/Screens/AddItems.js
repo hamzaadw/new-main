@@ -158,10 +158,12 @@ const AddItems = () => (
                     style={{ width: 120 }}
                     onChange={(value) => handleChanger(value, setFieldValue)}
                     options={[
-                      { value: '2PC', label: '2PC' },
-                      { value: '3PC', label: '3PC' },
+                      { value: 'Pants', label: 'Pants' },
+                      { value: 'T_shirts', label: 'T_shirts' },
                       { value: 'Unstitched', label: 'Unstitched' },
-                      { value: 'Lawn Wear', label: 'Lawn Wear' },
+                      { value: 'Shirts', label: 'Shirts' },
+                      { value: 'Hoodies', label: 'Hoodies' },
+                      { value: 'Stitched', label: 'Stitched' },
                     ]}
                   />
                   {errors.category && touched.category && <div>{errors.category}</div>}
@@ -184,7 +186,7 @@ const AddItems = () => (
                       { label: 'Small', value: 'Small' },
                       { label: 'Large', value: 'Large' },
                       { label: 'XL', value: 'XL' },
-                      { label: 'XXL', value: 'XXL' },
+                      { label: 'Medium', value: 'Medium' },
                       { label: 'None', value: 'None' }
                     ]}
                     value={values.sizes}
