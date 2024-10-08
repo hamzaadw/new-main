@@ -14,5 +14,12 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "/",
+      "statusCode": 200
+    }
   ]
 }
