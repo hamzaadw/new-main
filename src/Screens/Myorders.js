@@ -11,6 +11,7 @@ function Myorders() {
   const [orders, setOrders] = React.useState([]);
   const [products, setProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [email, setEmail] = React.useState(null);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -18,6 +19,8 @@ function Myorders() {
       if (user) {
         const uid = user.uid;
         setUid(uid);
+
+        setEmail(user.email)
         console.log("User ID:", uid);
       } else {
         console.log("User is signed out");
@@ -97,7 +100,6 @@ function Myorders() {
 
             await Swal.fire('Success', 'Your order has been successfully canceled.', 'success');
 
-            const email = orderData.email;
             console.log(email)
 
             const message = `Your order with ID ${orderId} has been successfully canceled.`;
