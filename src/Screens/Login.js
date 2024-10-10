@@ -4,10 +4,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from '../configirations/firebase';
 import swal from 'sweetalert'; // Import SweetAlert
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import FontAwesome
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Import Eye icons
 
 export default function Contact() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // New state for password visibility
   let navigate = useNavigate();
 
   const handleEmailChange = (event) => {
@@ -16,6 +19,10 @@ export default function Contact() {
 
   const handlePassChange = (event) => {
     setPass(event.target.value);
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); // Toggle password visibility
   };
 
   const login = () => {
@@ -47,6 +54,27 @@ export default function Contact() {
       });
   };
 
+  // Inline styles
+  const styles = {
+    inputGroup: {
+      position: 'relative',
+      marginTop: '20px',
+    },
+    eyeIcon: {
+      position: 'absolute',
+      right: '10px',
+      top: '70%',
+      transform: 'translateY(-50%)',
+      cursor: 'pointer',
+      border: 'none',
+      background: 'transparent',
+    },
+    button: {
+      borderRadius: '30px',
+      transition: 'background-color 0.3s',
+    },
+  };
+
   return (
     <>
       <div className="my-4">
@@ -64,17 +92,29 @@ export default function Contact() {
                 onChange={handleEmailChange}
               />
 
-              <Input
-                title="Password"
-                type="password"
-                value={pass}
-                onChange={handlePassChange}
-              />
+              <div style={styles.inputGroup}>
+                <Input
+                  title="Password"
+                  type={showPassword ? "text" : "password"} // Toggle input type
+                  value={pass}
+                  onChange={handlePassChange}
+                />
+                <span 
+                  style={styles.eyeIcon} 
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </span>
+              </div>
 
               <div className="d-grid mt-4">
-                <button onClick={login} type="button" className="btn btn-outline-primary">
+                <button onClick={login} type="button" className="btn btn-outline-primary" style={styles.button}>
                   Submit
                 </button>
+              </div>
+
+              <div className="text-center mt-3">
+                <NavLink to="/forgot-password">Forgot your password?</NavLink>
               </div>
 
               <div className="text-center mt-3">

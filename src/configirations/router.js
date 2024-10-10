@@ -16,6 +16,7 @@ import T_shirt from '../Screens/catogries/T_shirt';
 import Shirt from '../Screens/catogries/Shirts';
 import Stitched from '../Screens/catogries/stiched';
 import Unstitched from '../Screens/catogries/Unstitched';
+import ForgotPassword from '../Screens/Forgotpass';
 
 import ProductDetails from '../Screens/Productdetails';
 
@@ -70,6 +71,7 @@ function Router() {
           <Route path="/Unstitched" element={<Unstitched />} />
 
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
   
 
           {/* Protected Routes for Admin */}
