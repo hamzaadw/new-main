@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDocs, query, where, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from '../configirations/firebase';
 import { onAuthStateChanged } from "firebase/auth";
 import Button from '@mui/material/Button';
+import Swal from 'sweetalert2';
 
 function Myorders() {
   const [uid, setUid] = React.useState(null);
@@ -40,14 +41,11 @@ function Myorders() {
 
             let productIds = [];
 
-            // Loop through each order to gather product IDs
             orderData.Orders.forEach((order) => {
               order.OrderDetails.forEach((detail) => {
-                console.log("Detail Products:", detail.Products); // Log to inspect Products
+                console.log("Detail Products:", detail.Products);
 
-                // Ensure Products is a valid array before processing
                 if (Array.isArray(detail.Products)) {
-                  // Assuming each product is an object with an `id` field
                   const productIdsFromDetail = detail.Products.map(product => product.id);
                   productIds = productIds.concat(productIdsFromDetail);
                 } else {
@@ -58,7 +56,6 @@ function Myorders() {
 
             console.log("All Product IDs before filtering:", productIds);
 
-            // Filter out non-string values (if any exist)
             productIds = productIds.filter((id) => typeof id === 'string');
             console.log("Filtered Product IDs:", productIds);
 
@@ -89,9 +86,109 @@ function Myorders() {
     }
   }, [uid]);
 
-
   const handleBackToShop = () => {
     navigate('/');
+  };
+
+  const handleCancelOrder = async (orderId, detail) => {
+    try {
+      console.log("Canceling order with ID:", orderId);
+      console.log("Canceling order details:", detail);
+
+      const uid = auth.currentUser.uid;
+      const orderDocRef = doc(db, "Orders", uid);
+      const orderDocSnap = await getDoc(orderDocRef);
+
+      if (orderDocSnap.exists()) {
+        const orderData = orderDocSnap.data();
+
+        if (detail && detail.Products) {
+          if (detail.Status === "Pending" || detail.Status === "Processing") {
+            detail.Status = "canceled";
+            console.log(`Order with ID ${orderId} has been canceled.`);
+
+            await updateDoc(orderDocRef, {
+              Orders: orderData.Orders
+            });
+
+            // Email logic to send cancellation confirmation
+            const email = orderData.email; // Assuming email is part of orderData
+
+            const message = `Your order with ID ${orderId} has been successfully canceled.`;
+            const message2 = `
+              Order ID: ${orderId}
+              Status: Canceled
+            `;
+  
+            try {
+              // Sending email to the recipient
+              const response1 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/register`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  recipientEmail: email, // Email of the recipient
+                  subject: "Order Canceled",
+                  message: message,
+                  message2: message2
+                })
+              });
+  
+              if (!response1.ok) {
+                const errorData = await response1.json();
+                throw new Error(`Error: ${errorData.message}`);
+              }
+  
+              const data1 = await response1.json();
+              console.log("Cancellation email sent to recipient:", data1);
+
+              // Sending email to yourself (Hamza)
+              const response2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/register`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  recipientEmail: "hamzaasadabcd@gmail.com", // Your email
+                  subject: "Order Canceled - Notification",
+                  message: message,
+                  message2: message2
+                })
+              });
+  
+              if (!response2.ok) {
+                const errorData = await response2.json();
+                throw new Error(`Error: ${errorData.message}`);
+              }
+  
+              const data2 = await response2.json();
+              console.log("Cancellation email sent to yourself:", data2);
+
+            } catch (error) {
+              console.error("Error sending email:", error);
+            }
+
+          } else {
+            await Swal.fire({
+              icon: 'warning',
+              title: 'Oops...',
+              text: 'Sorry, you can only cancel orders that are pending or processing!',
+            });
+          }
+        } else {
+          await Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Order details are not available for cancellation.',
+          });
+        }
+      } else {
+        console.log("No order document found for the user.");
+      }
+    } catch (error) {
+      console.error("Error canceling order:", error);
+    }
   };
 
   return (
@@ -124,56 +221,39 @@ function Myorders() {
             <div key={index}>
               {order.OrderDetails.map((detail, idx) => (
                 <div key={idx} style={styles.cardContainer}>
-
-
                   {detail.Products.map((productObj, productIndex) => {
-                    const product = products.find(p => p.id === productObj.id); // Access product id from object
+                    const product = products.find(p => p.id === productObj.id);
                     return (
                       <div key={productIndex} style={styles.card}>
                         <img
                           src={product?.image || "https://via.placeholder.com/100"}
                           alt="Product"
-                          style={styles.productImage}
+                          style={styles.image}
                         />
-                        <div style={styles.productDetails}>
-                          <h4 style={styles.productName}>
-                            {product?.name || "Product Name"}
-                          </h4>
-
-                          <div style={styles.infoItem}>
-                            <span style={styles.infoLabel}>Order id:</span>
-                            <span>{detail.OrderId}</span>
-                          </div>
-
-                          <div style={styles.infoSection}>
-                            <div style={styles.infoItem}>
-                              <span style={styles.infoLabel}>Status:</span>
-                              <span>{detail.Status}</span>
-                            </div>
-                            <div style={styles.infoItem}>
-                              <span style={styles.infoLabel}>Payment Method:</span>
-                              <span>{detail.PaymentMethod}</span>
-                            </div>
-                            <div style={styles.infoItem}>
-                              <span style={styles.infoLabel}>Order Date:</span>
-                              <span>{detail.Date.toDate().toLocaleDateString()}</span>
-                            </div>
-                          </div>
-                          <p style={styles.infoMessage}>All orders may take up to 2 working days.</p>
+                        <div style={styles.cardContent}>
+                          <h2>{product?.name}</h2>
+                          <p>Price: ${product?.price}</p>
+                          <p>Order ID: {order.OrderDetails[0].OrderId}</p>
+                          <p>Status: {detail.Status}</p>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            onClick={() => handleCancelOrder(order.OrderDetails[0].OrderId, detail)}
+                            style={styles.cancelButton}
+                          >
+                            Cancel Order
+                          </Button>
                         </div>
                       </div>
                     );
                   })}
-
-
-
                 </div>
               ))}
             </div>
           ))}
         </div>
       ) : (
-        <p style={styles.noOrders}>No orders found</p>
+        <p style={styles.noOrders}>No orders found.</p>
       )}
     </div>
   );
@@ -181,91 +261,44 @@ function Myorders() {
 
 const styles = {
   container: {
-    padding: '24px',
-    backgroundColor: '#f5f5f5',
-    minHeight: '100vh',
-
+    padding: '2rem',
+    maxWidth: '800px',
+    margin: '0 auto',
   },
   heading: {
     textAlign: 'center',
-    color: '#333',
-    fontSize: '2em',
-    marginBottom: '24px',
-    fontFamily: '"Lemon/Milk", sans-serif',
+    marginBottom: '1.5rem',
   },
   loading: {
     textAlign: 'center',
-    color: '#666',
-  },
-  noOrders: {
-    textAlign: 'center',
-    color: '#666',
-    fontSize: '1.2em',
   },
   cardContainer: {
-    display: 'flex',
-    flexDirection: 'column', // Stack cards vertically
-    gap: '24px',
-    justifyContent: 'center',
-    marginBottom: '24px',
+    marginBottom: '1rem',
   },
   card: {
     display: 'flex',
-    flexDirection: 'column', // Stack image and details vertically
     alignItems: 'center',
-    height: 'auto', // Allow height to adjust based on content
-    width: '100%',
-    maxWidth: '400px',
+    padding: '1rem',
     border: '1px solid #ddd',
-    borderRadius: '12px',
-    padding: '16px',
-    boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#fff',
-    boxSizing: 'border-box',
-    overflow: 'hidden',
+    borderRadius: '4px',
+    marginBottom: '1rem',
   },
-  productImage: {
-    width: '150px',
-    height: '150px',
-    borderRadius: '12px',
-    marginBottom: '16px', // Add space below the image
+  image: {
+    width: '100px',
+    height: '100px',
     objectFit: 'cover',
+    marginRight: '1rem',
   },
-  productDetails: {
-    width: '100%', // Take full width inside the card
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+  cardContent: {
+    flexGrow: 1,
   },
-  productName: {
-    fontSize: '1.2em',
-    margin: '0 0 12px 0',
-    color: '#333',
-    fontFamily: '"Raleway", sans-serif',
+  cancelButton: {
+    marginTop: '1rem',
   },
-  infoSection: {
-    width: '100%', // Take full width for the info section
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    marginTop: '12px',
-  },
-  infoItem: {
-    display: 'flex',
-    justifyContent: 'space-between', // Space out label and value
-    width: '100%',
-    flexWrap: 'wrap', // Wrap content on small screens
-    fontSize: '0.9em',
-  },
-  infoLabel: {
-    fontWeight: '300', // Light font weight
-    color: '#555',
-    width: '150px',
-  },
-  infoMessage: {
-    marginTop: '16px',
+  noOrders: {
+    textAlign: 'center',
+    marginTop: '2rem',
     fontStyle: 'italic',
-    color: '#888',
   },
 };
 

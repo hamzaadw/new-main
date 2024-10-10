@@ -14,29 +14,26 @@ export default function Cards({ name, price, image, id, rating }) {
     return (
         <div style={{ marginTop: -30, marginBottom: 60 }} className='animation'>
             <Card sx={{
-                marginLeft:2,
-                width: 280,
-                height: 450,
-                borderRadius: '15px',
-                boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+                marginLeft: 2,
+                width: 300,
+                height: 'auto',
+                borderRadius: '0px', // Changed to sharp corners
+                boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)', // Slightly darker shadow for depth
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
                 transition: 'transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
                 '&:hover': {
                     transform: 'translateY(-10px)',
-                    boxShadow: 'rgba(0, 0, 0, 0.2) 0px 15px 25px, rgba(0, 0, 0, 0.1) 0px 5px 10px',
+                    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 20px 40px, rgba(0, 0, 0, 0.2) 0px 10px 20px',
                 },
             }}>
                 <CardActionArea onClick={() => navigate(`/product/${id}`)} sx={{ height: '100%' }}>
                     <div style={{
                         width: '100%',
-                        height: 280,
+                        height: 250, // Adjusted height for a better aspect ratio
                         overflow: 'hidden',
-                        margin: 0,
-              
-                        padding: 0,
-                        borderRadius: '15px 15px 0 0',
+                        borderRadius: '0px 0px 0 0', // Keep the corners sharp
                     }}>
                         <CardMedia
                             component="img"
@@ -46,16 +43,25 @@ export default function Cards({ name, price, image, id, rating }) {
                                 width: '100%',
                                 height: '100%',
                                 objectFit: 'cover',
+                                transition: 'transform 0.3s ease',
+                                '&:hover': {
+                                    transform: 'scale(1.1)', // Adds a zoom effect on hover
+                                },
                             }}
                         />
                     </div>
-                    <CardContent sx={{ padding: 2, flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <CardContent sx={{ padding: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
                             <Typography
                                 gutterBottom
                                 variant="h6"
                                 component="div"
-                                sx={{ fontWeight: 'bold', fontSize: '1.1rem', color: '#333' }}
+                                sx={{
+                                    fontWeight: '700', // Bolder font weight
+                                    fontSize: '1.5rem', // Increased font size
+                                    color: '#333', // Darker text for better contrast
+                                    fontFamily: 'Arial, sans-serif',
+                                }}
                             >
                                 {name}
                             </Typography>
@@ -63,13 +69,31 @@ export default function Cards({ name, price, image, id, rating }) {
                                 gutterBottom
                                 variant="body1"
                                 component="div"
-                                sx={{ fontWeight: '500', fontSize: '1rem', color: 'rgba(243, 114, 157, 0.918)' }}
+                                sx={{
+                                    fontWeight: '600', // Increased font weight
+                                    fontSize: '1.3rem', // Increased font size
+                                    color: 'rgba(243, 114, 157, 0.918)',
+                                    marginBottom: '10px', // Space below the price
+                                }}
                             >
                                 RS. {price}
                             </Typography>
-                        
                         </div>
-                        <BasicRating value={rating} />
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <BasicRating value={rating} />
+                            <Typography
+                                variant="body2"
+                                component="span"
+                                sx={{
+                                    marginLeft: '5px',
+                                    fontSize: '1rem', // Increased font size for better readability
+                                    color: '#666', // Slightly lighter color
+                                    fontStyle: 'italic',
+                                }}
+                            >
+                                {rating} Stars
+                            </Typography>
+                        </div>
                     </CardContent>
                 </CardActionArea>
             </Card>
