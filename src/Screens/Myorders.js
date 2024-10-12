@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from '../configirations/firebase';
 import { onAuthStateChanged } from "firebase/auth";
 import Button from '@mui/material/Button';
@@ -15,27 +15,26 @@ function Myorders() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         setUid(uid);
-
-        setEmail(user.email)
+        setEmail(user.email);
         console.log("User ID:", uid);
       } else {
         console.log("User is signed out");
       }
     });
-    return unsubscribe;
+
+    return unsubscribeAuth;
   }, []);
 
   React.useEffect(() => {
     if (uid) {
-      const getOrdersAndProducts = async () => {
-        try {
-          const docRef = doc(db, "Orders", uid);
-          const docSnap = await getDoc(docRef);
+      const orderDocRef = doc(db, "Orders", uid);
 
+      const unsubscribeOrders = onSnapshot(orderDocRef, async (docSnap) => {
+        try {
           if (docSnap.exists()) {
             const orderData = docSnap.data();
             setOrders(orderData.Orders || []);
@@ -70,9 +69,11 @@ function Myorders() {
         } finally {
           setLoading(false);
         }
-      };
+      });
 
-      getOrdersAndProducts();
+      return () => {
+        unsubscribeOrders();
+      };
     }
   }, [uid]);
 
@@ -100,7 +101,7 @@ function Myorders() {
 
             await Swal.fire('Success', 'Your order has been successfully canceled.', 'success');
 
-            console.log(email)
+            console.log(email);
 
             const message = `Your order with ID ${orderId} has been successfully canceled.`;
             const message2 = `Order ID: ${orderId}\nStatus: Canceled`;
@@ -158,7 +159,16 @@ function Myorders() {
         Back to Shop
       </Button>
 
-      <h1 style={styles.heading}>My Orders</h1>
+      <div style={styles.linksContainer}>
+        <a href="/myorders" style={{ ...styles.link, borderBottom: window.location.pathname === '/myorders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' }}>
+          My Orders
+        </a>
+        <a href="/canceled-orders" style={{ ...styles.link, borderBottom: window.location.pathname === '/canceled-orders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' }}>
+          My Canceled Orders
+        </a>
+      </div>
+
+      <h2 style={styles.heading}>My Orders</h2>
       {loading ? (
         <p style={styles.loading}>Loading...</p>
       ) : orders.length > 0 ? (
@@ -214,6 +224,7 @@ const styles = {
   heading: {
     textAlign: 'center',
     marginBottom: '1.5rem',
+    fontSize: '1.5rem', // Reduced heading size
   },
   loading: {
     textAlign: 'center',
@@ -245,6 +256,19 @@ const styles = {
   },
   backButton: {
     marginBottom: '1rem',
+  },
+  linksContainer: {
+    display: 'flex',
+    justifyContent: 'center', // Closer together
+    marginBottom: '1rem',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#000',
+    fontWeight: '400', // Thinner text
+    fontSize: '1rem',
+    margin: '0 10px', // Space between links
+    paddingBottom: '5px',
   },
 };
 

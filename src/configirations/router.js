@@ -19,7 +19,7 @@ import Unstitched from '../Screens/catogries/Unstitched';
 import ForgotPassword from '../Screens/Forgotpass';
 
 import ProductDetails from '../Screens/Productdetails';
-
+import CanceledOrders from '../Screens/CancelOrders';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../configirations/firebase';
@@ -59,7 +59,7 @@ function Router() {
           <Route path="/contactus" element={<Contactus />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/Myorders" element={<Myorders />} />
-
+          <Route path="/canceled-orders" element={<CanceledOrders />} />
 
          
    

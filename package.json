@@ -36,6 +36,8 @@
     "sweetalert2": "^11.14.2",
     "web-vitals": "^2.1.4"
   },
+  "homepage": "https://new-main-xfd9.vercel.app"
+,
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
