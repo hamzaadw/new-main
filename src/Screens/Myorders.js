@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { doc, onSnapshot, updateDoc, getDoc } from "firebase/firestore";
 import { auth, db } from '../configirations/firebase';
 import { onAuthStateChanged } from "firebase/auth";
@@ -160,12 +160,24 @@ function Myorders() {
       </Button>
 
       <div style={styles.linksContainer}>
-        <a href="/myorders" style={{ ...styles.link, borderBottom: window.location.pathname === '/myorders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' }}>
+        <NavLink 
+          to="/myorders" 
+          style={{ 
+            ...styles.link, 
+            borderBottom: window.location.pathname === '/myorders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' 
+          }}
+        >
           My Orders
-        </a>
-        <a href="/canceled-orders" style={{ ...styles.link, borderBottom: window.location.pathname === '/canceled-orders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' }}>
+        </NavLink>
+        <NavLink 
+          to="/canceledOrders" 
+          style={{ 
+            ...styles.link, 
+            borderBottom: window.location.pathname === '/canceled-orders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' 
+          }}
+        >
           My Canceled Orders
-        </a>
+        </NavLink>
       </div>
 
       <h2 style={styles.heading}>My Orders</h2>
@@ -202,7 +214,7 @@ function Myorders() {
                         </div>
                       </div>
                     );
-                  })}
+                  })} 
                 </div>
               ))}
             </div>
@@ -234,19 +246,22 @@ const styles = {
   },
   card: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column', // Stack elements vertically
+    alignItems: 'center', // Center items horizontally
     padding: '1rem',
     border: '1px solid #ddd',
     borderRadius: '4px',
     marginBottom: '1rem',
   },
   image: {
-    width: '100px',
-    height: '100px',
-    marginRight: '1rem',
+    width: '100%', // Make the image cover the full width
+    height: 'auto', // Maintain aspect ratio
+    maxHeight: '150px', // Set a maximum height
+    objectFit: 'cover', // Ensure the image covers the div
   },
   cardContent: {
     flex: 1,
+    textAlign: 'center', // Center text below image
   },
   cancelButton: {
     marginTop: '1rem',
@@ -265,10 +280,23 @@ const styles = {
   link: {
     textDecoration: 'none',
     color: '#000',
-    fontWeight: '400', // Thinner text
-    fontSize: '1rem',
-    margin: '0 10px', // Space between links
-    paddingBottom: '5px',
+    fontWeight: '400', // Reduced font weight
+    margin: '0 1rem',
+    transition: 'border-bottom 0.3s',
+  },
+};
+
+// Media queries to adjust styles for smaller screens
+const mediaQueries = {
+  '@media (max-width: 600px)': {
+    card: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    image: {
+      height: 'auto',
+      maxHeight: '200px', // Adjust max height for small screens
+    },
   },
 };
 

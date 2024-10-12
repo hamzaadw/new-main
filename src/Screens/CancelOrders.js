@@ -5,6 +5,7 @@ import { auth, db } from '../configirations/firebase';
 import { onAuthStateChanged } from "firebase/auth";
 import Button from '@mui/material/Button';
 import Swal from 'sweetalert2';
+import { NavLink } from 'react-router-dom';
 
 function CanceledOrders() {
   const [uid, setUid] = React.useState(null);
@@ -92,7 +93,48 @@ function CanceledOrders() {
         Back to Shop
       </Button>
 
+
+ 
+
+
+
+
+
+      <div style={styles.linksContainer}>
+        <NavLink 
+          to="/myorders" 
+          style={{ 
+            ...styles.link, 
+            borderBottom: window.location.pathname === '/myorders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' 
+          }}
+        >
+          My Orders
+        </NavLink>
+        <NavLink 
+          to="/canceledOrders" 
+          style={{ 
+            ...styles.link, 
+            borderBottom: window.location.pathname === '/canceledOrders' ? '2px solid rgba(243, 114, 157, 0.918)' : 'none' 
+          }}
+        >
+          My Canceled Orders
+        </NavLink>
+      </div>
+
+
+
+
+
+
+
+
+
+
       <h1 style={styles.heading}>My Canceled Orders</h1>
+
+
+
+
       {loading ? (
         <p style={styles.loading}>Loading...</p>
       ) : canceledOrders.length > 0 ? (
@@ -170,6 +212,18 @@ const styles = {
   },
   backButton: {
     marginBottom: '1rem',
+  },linksContainer: {
+    display: 'flex',
+    justifyContent: 'center', // Closer together
+    marginBottom: '1rem',
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#000',
+    fontWeight: '400', // Reduced font weight
+    margin: '0 1rem',
+    padding: '0.5rem',
+    transition: 'border-bottom 0.3s',
   },
 };
 
