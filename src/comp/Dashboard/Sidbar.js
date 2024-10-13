@@ -7,6 +7,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CancelIcon from '@mui/icons-material/Cancel'; // Import an icon for canceled orders
 
 const Sidebar = ({ onMenuClick }) => {
   const menuItems = [
@@ -15,6 +16,7 @@ const Sidebar = ({ onMenuClick }) => {
     { text: 'Products', icon: <InventoryIcon /> },
     { text: 'Customers', icon: <PeopleIcon /> },
     { text: 'Pending', icon: <BarChartIcon /> },
+    { text: 'Canceled Orders', icon: <CancelIcon /> }, // Added canceled orders
     { text: 'Settings', icon: <SettingsIcon /> },
   ];
 
@@ -25,8 +27,6 @@ const Sidebar = ({ onMenuClick }) => {
           Admin Panel
         </Typography>
         {menuItems.map((item, index) => (
-
-          
           <ListItem button key={index} onClick={() => onMenuClick(item.text)}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} />

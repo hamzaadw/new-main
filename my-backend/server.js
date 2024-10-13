@@ -1,23 +1,33 @@
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
-const path = require('path'); // Add this line to import the path module
-require('dotenv').config(); // Ensure environment variables are loaded
+const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
-// Enable CORS for requests from your frontend
+// List of allowed origins
+const allowedOrigins = ['https://new-main-xfd9.vercel.app', 'https://www.wavethirl.online'];
+
+// Enable CORS for requests from specific origins
 app.use(cors({
-    origin: 'https://new-main-xfd9.vercel.app',
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-
 app.use(express.json());
 
 // API endpoints
-
 
 // Route to send email with nodemailer
 app.post('/register', async (req, res) => {
@@ -42,7 +52,7 @@ app.post('/register', async (req, res) => {
 
     const mailOptionsToSender = {
         from: process.env.GMAIL_USER,
-        to:   process.env.GMAIL_USER,
+        to: process.env.GMAIL_USER,
         subject: "Order Received",
         text: message2,
     };

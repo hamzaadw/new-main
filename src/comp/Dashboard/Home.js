@@ -31,6 +31,14 @@ const Layout = ({setOpen, open}) => {
     return () => unsubscribe();
   }, []);
 
+
+
+
+
+
+
+
+
   const handleMenuClick = (option) => {
     setSelectedOption(option);
     console.log("Selected Option:", option);
@@ -40,8 +48,87 @@ const Layout = ({setOpen, open}) => {
         title: 'Product Title',
         description: 'This is a description of the product.'
       }]);
+    } else if (option === 'Canceled Orders') {
+      fetchCanceledOrders(); // Call the function to fetch canceled orders
+    } else {
+      fetchOrderData(); // Fetch order data for other options if needed
     }
-  };
+};
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+const fetchCanceledOrders = () => {
+  if (uid) {
+    console.log("Fetching canceled orders for UID:", uid);
+    const ordersCollection = collection(db, 'Orders');
+
+    onSnapshot(ordersCollection, (querySnapshot) => {
+      const canceledOrders = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        if (data.Orders && Array.isArray(data.Orders)) {
+          data.Orders.forEach((order) => {
+            if (order.OrderDetails && Array.isArray(order.OrderDetails)) {
+              const orderDetails = order.OrderDetails[0]; // Assuming you want the first order detail
+
+              if (orderDetails.Status === 'canceled') {
+                const products = orderDetails.Products || [];
+                products.forEach(product => {
+                  canceledOrders.push({
+                    docId: doc.id,
+                    title: 'Canceled Orders',
+                    productId: product.id || 'Unknown ID',
+                    productName: product.name, 
+                    productPrice: product.price, 
+                    productSize: product.size, 
+                    orderId: orderDetails.OrderId,
+                    orderDate: new Date(orderDetails.Date.seconds * 1000).toDateString(),
+                    status: orderDetails.Status || 'Pending',
+                    city: order.City,
+                    famousPlace: order.famousPlace,
+                    FullAddress: order.FullAddress,
+                    FullName: order.FullName,
+                    email: order.email,
+                    PhoneNumber: order.PhoneNumber,
+                  });
+                });
+              }
+            }
+          });
+        }
+      });
+
+      setCardContent(canceledOrders);
+      console.log("Canceled Orders:", canceledOrders);
+    });
+  }
+};
+  
+
+
+
+
+
+
+
+
+
+
+
 
 
   const fetchOrderData = () => {
@@ -199,10 +286,19 @@ const Layout = ({setOpen, open}) => {
             email={content.email}
             FullAddress={content.FullAddress}
             onStatusChange={(newStatus) => {
-                console.log(`Status changed to: ${newStatus} for Order ID: ${content.orderId}`);
-                setCardStatuses((prevStatuses) => ({ ...prevStatuses, [index]: newStatus }));
-                fetchOrderById(content.orderId, newStatus); // Fetch and update specific order by ID when status changes
-            }}
+              console.log(`Status changed to: ${newStatus} for Order ID: ${content.orderId}`);
+              setCardStatuses((prevStatuses) => ({ ...prevStatuses, [index]: newStatus }));
+          
+              // Directly update the card content if needed
+              setCardContent((prevContent) =>
+                  prevContent.map((item, idx) =>
+                      idx === index ? { ...item, status: newStatus } : item
+                  )
+              );
+          
+              fetchOrderById(content.orderId, newStatus); // Update Firestore
+          }}
+          
         />
     ))
 )}

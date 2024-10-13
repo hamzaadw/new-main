@@ -3,7 +3,9 @@ import pic1 from "../images/pic1.webp";
 import pic2 from "../images/Trendy_-_Top_Banner.webp";
 import pic3 from "../images/shiza_slider.webp";
 import pic4 from "../images/web-banner.png";
+import pic5 from "../images/dd.png";
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './animations.css'; // Import the custom CSS file
 
@@ -22,7 +24,7 @@ function Courasla() {
                     <img className="d-block w-100 img-fluid" src={pic2} alt="Second slide" />
                 </div>
                 <div className="carousel-item">
-                    <img className="d-block w-100 img-fluid" src={pic3} alt="Third slide" />
+                    <img className="d-block w-100 img-fluid" src={pic5} alt="Third slide" />
                 </div>
             </div>
             <a

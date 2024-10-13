@@ -58,8 +58,18 @@ const Navbarrer = () => {
               )}
 
               {/* TrekTech Brand - Centered or Left-Aligned */}
-              <span className={`navbar-brand ${isMobile ? 'centered-brand' : 'left-aligned-brand'}`} href="#">
-                TrekTech
+              <span
+                className="navbar-brand"
+                style={{
+                  flexGrow: 1, // Allow the brand to take available space
+                  display: 'flex', // Use flexbox
+                  justifyContent: isMobile ? 'center' : 'flex-start', // Center content horizontally or align left based on screen size
+                  textAlign: 'center' // Center text
+                }}
+              >
+                <NavLink to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  Wave Thril
+                </NavLink>
               </span>
 
               {/* Nav Links (collapsed on small screens) */}
@@ -75,16 +85,16 @@ const Navbarrer = () => {
                     </NavLink>
                     <div className="dropdown-content" style={dropdownStyle}>
                       <MenuItem component={NavLink} to="/pants" style={menuItemStyle}>
-                        Pants
+                        <span className="dropdown-text">Pants</span>
                       </MenuItem>
                       <MenuItem component={NavLink} to="/t_shirts" style={menuItemStyle}>
-                        T-Shirts
+                        <span className="dropdown-text">T-Shirts</span>
                       </MenuItem>
                       <MenuItem component={NavLink} to="/shirts" style={menuItemStyle}>
-                        Shirts
+                        <span className="dropdown-text">Shirts</span>
                       </MenuItem>
                       <MenuItem component={NavLink} to="/hoodies" style={menuItemStyle}>
-                        Hoodies
+                        <span className="dropdown-text">Hoodies</span>
                       </MenuItem>
                     </div>
                   </li>
@@ -96,10 +106,10 @@ const Navbarrer = () => {
                     </NavLink>
                     <div className="dropdown-content" style={dropdownStyle}>
                       <MenuItem component={NavLink} to="/stitched" style={menuItemStyle}>
-                        Stitched
+                        <span className="dropdown-text">Stitched</span>
                       </MenuItem>
                       <MenuItem component={NavLink} to="/unstitched" style={menuItemStyle}>
-                        Unstitched
+                        <span className="dropdown-text">Unstitched</span>
                       </MenuItem>
                     </div>
                   </li>
@@ -149,22 +159,22 @@ const Navbarrer = () => {
                 <h4>Men</h4>
                 <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
                   <li>
-                    <NavLink to="/pants" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/pants" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       Pants
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/t_shirts" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/t_shirts" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       T-Shirts
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/shirts" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/shirts" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       Shirts
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/hoodies" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/hoodies" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       Hoodies
                     </NavLink>
                   </li>
@@ -174,12 +184,12 @@ const Navbarrer = () => {
                 <h4>Women</h4>
                 <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
                   <li>
-                    <NavLink to="/stitched" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/stitched" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       Stitched
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="/unstitched" onClick={() => setMenuOpen(false)}>
+                    <NavLink to="/unstitched" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
                       Unstitched
                     </NavLink>
                   </li>
@@ -209,23 +219,45 @@ const Navbarrer = () => {
             color: rgba(243, 114, 157, 0.918);
             transition: color 0.3s ease-in-out;
           }
+          .dropdown-text {
+            font-size: 0.875rem; /* Adjust font size for small text */
+            color: black; /* Default text color */
+            text-decoration: none; /* Remove underline */
+            transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+          }
+          .dropdown-text:hover {
+            color: rgba(243, 114, 157, 0.918); /* Change color on hover */
+            text-decoration: underline; /* Add underline on hover */
+          }
+          .drawer-menu-item {
+            color: black; /* Default text color */
+            text-decoration: none; /* Remove underline */
+            padding: 10px 0; /* Add vertical padding */
+            transition: color 0.3s ease-in-out;
+          }
+          .drawer-menu-item:hover {
+            color: rgba(243, 114, 157, 0.918); /* Change color on hover */
+          }
         `}
       </style>
     </>
   );
 };
 
+// CSS styles for the dropdown and menu items
 const dropdownStyle = {
-  display: "none",
-  position: "absolute",
-  backgroundColor: "#fff",
-  boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)",
-  zIndex: 1,
-  padding: "15px",
-  borderRadius: "8px",
-  transition: "all 0.3s ease-in-out",
+  position: 'absolute',
+  backgroundColor: 'white',
+  boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+  borderRadius: '5px',
+  zIndex: 10,
+  padding: '10px 0',
+  display: 'none', // Initially hidden
 };
 
-const menuItemStyle = { padding: "10px 20px", cursor: "pointer" };
+const menuItemStyle = {
+  padding: '10px 20px',
+  cursor: 'pointer',
+};
 
 export default Navbarrer;

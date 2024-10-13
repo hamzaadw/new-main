@@ -17,7 +17,7 @@ import Shirt from '../Screens/catogries/Shirts';
 import Stitched from '../Screens/catogries/stiched';
 import Unstitched from '../Screens/catogries/Unstitched';
 import ForgotPassword from '../Screens/Forgotpass';
-
+import CanceledOrdersPage from '../comp/Dashboard/Cancelorderpage';
 import ProductDetails from '../Screens/Productdetails';
 import CanceledOrders from '../Screens/CancelOrders';
 
@@ -60,6 +60,7 @@ function Router() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Myorders" element={<Myorders />} />
           <Route path="/canceledOrders" element={<CanceledOrders />} />
+          <Route path="/canceled-orders" element={<CanceledOrdersPage />} />
 
          
    
