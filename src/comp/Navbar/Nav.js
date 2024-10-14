@@ -9,6 +9,8 @@ import CustomButton from "../btn";
 import AnchorTemporaryDrawer from "../DrawerCart";
 import { auth } from "../../configirations/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import logo from "../../images/Black and White Man Clothes Logo (1).png"
+
 
 const Navbarrer = () => {
   const [IsUser, setIsUser] = useState(false);
@@ -68,6 +70,8 @@ const Navbarrer = () => {
                 }}
               >
                 <NavLink to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+                  <img style={{width:40}} src={logo}></img>
+
                   Wave Thril
                 </NavLink>
               </span>

@@ -9,6 +9,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import BasicModal from '../comp/BasicModal';
 import { Divider } from 'antd';
 import moment from 'moment'; 
+import Footer from '../comp/Footer';
+
 
 function Shop() {
     const [data, setData] = useState([]);
@@ -91,19 +93,20 @@ function Shop() {
 
             {/* Trending Products */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-                {trendingProducts.map((v) => (
-                    <Cards
-                        view={view}
-                        setOpen={setOpen}
-                        id={v.id}
-                        key={v.id}
-                        image={v.image[0]}
-                        name={v.name}
-                        price={v.price}
-                        rating={v.rating}
-                    />
-                ))}
-            </div>
+    {trendingProducts.map((v) => (
+        <Cards
+            view={view}
+            setOpen={setOpen}
+            id={v.id}
+            key={v.id}
+            image={v.image[0]}
+            name={v.name}
+            price={v.price}
+            rating={v.rating}
+        />
+    ))}
+</div>
+
 
             <Divider />
             <div className='text-center'>
@@ -126,6 +129,8 @@ function Shop() {
                     />
                 ))}
             </div>
+
+            <Footer/>
         </>
     );
 }
