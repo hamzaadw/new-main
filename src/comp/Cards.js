@@ -23,9 +23,9 @@ export default function Cards({ name, price, image, id, rating }) {
 
         // Update card style
         if (screenWidth <= 500) {  
-            setCardStyle({ width: 'calc(100% - 10px)', margin: '5px', height: 'auto' }); // Full width for small screens
+            setCardStyle({ width: 'calc(100% - 150px)', margin: '5px', height: '300px' }); // Full width for small screens
             setImageHeight('150px'); // Reduce the image height for small screens
-        } else if (screenWidth <= 500) {
+        } else if (screenWidth <= 600) {
             setCardStyle({ width: 'calc(50% - 10px)', margin: '5px', height: 'auto' }); // Half width for medium screens
             setImageHeight('180px');
         } else {

@@ -70,7 +70,7 @@ const Navbarrer = () => {
                 }}
               >
                 <NavLink to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
-                  <img style={{width:40}} src={logo}></img>
+                  <img style={{width:30}} src={logo}></img>
 
                   Wave Thril
                 </NavLink>

@@ -24,6 +24,11 @@ import CanceledOrders from '../Screens/CancelOrders';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../configirations/firebase';
 
+
+import AboutUs from '../comp/footerlinks/Aboutus';
+import PrivacyPolicy from '../comp/footerlinks/Privicy';
+
+
 function Router() {
   const [userEmail, setUserEmail] = useState(null);
   const [loading, setLoading] = useState(true); // New loading state
@@ -62,6 +67,9 @@ function Router() {
           <Route path="/canceledOrders" element={<CanceledOrders />} />
           <Route path="/canceled-orders" element={<CanceledOrdersPage />} />
 
+
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
          
    
           <Route path="/T_shirts" element={<T_shirt />} />
