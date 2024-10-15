@@ -124,7 +124,7 @@ function Myorders() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  recipientEmail: "hamzaasadabcd@gmail.com",
+                  recipientEmail: "dropshiping1000k@gmail.com",
                   subject: "Order Canceled - Notification",
                   message: message,
                   message2: message2
