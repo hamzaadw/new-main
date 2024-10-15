@@ -21,25 +21,25 @@ export default function Cards({ name, price, image, id, rating }) {
     const updateStyles = () => {
         const screenWidth = window.innerWidth;
 
-        // Update card style
-        if (screenWidth <= 500) {  
-            setCardStyle({ width: 'calc(100% - 150px)', margin: '5px', height: '300px' }); // Full width for small screens
-            setImageHeight('150px'); // Reduce the image height for small screens
+        // Update card style for screen sizes <= 500px to display two cards side by side
+        if (screenWidth <= 500) {
+            setCardStyle({ width: 'calc(50% - 10px)', margin: '5px', height: 'auto' }); // Display two cards side by side
+            setImageHeight('150px'); // Reduce image height for smaller screens
         } else if (screenWidth <= 600) {
-            setCardStyle({ width: 'calc(50% - 10px)', margin: '5px', height: 'auto' }); // Half width for medium screens
+            setCardStyle({ width: 'calc(50% - 20px)', margin: '10px', height: 'auto' }); // Half width for medium screens
             setImageHeight('180px');
         } else {
             setCardStyle({ width: '300px', margin: '10px', height: 'auto' }); // Fixed width for larger screens
             setImageHeight('200px');
         }
 
-        // Update font sizes
-        if (screenWidth <= 500) { 
+        // Update font sizes for different screen sizes
+        if (screenWidth <= 500) {
             setFontSizes({ name: '1rem', price: '0.9rem', rating: '0.8rem' });
         } else if (screenWidth <= 700) {
             setFontSizes({ name: '1.2rem', price: '1rem', rating: '0.9rem' });
         } else {
-            setFontSizes({ name: '1.5rem', price: '1.3rem', rating: '1rem' }); // Keep sizes the same for larger screens
+            setFontSizes({ name: '1.5rem', price: '1.3rem', rating: '1rem' }); // Larger font sizes for larger screens
         }
     };
 
@@ -79,11 +79,13 @@ export default function Cards({ name, price, image, id, rating }) {
                     </div>
                     <CardContent
                         style={{
-                            padding: '16px',
+                            marginLeft:-25,
+                            padding: '15px',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
                             height: '100%',
+                            textAlign: 'left', // Align all content to the left
                         }}
                     >
                         <Typography
@@ -91,8 +93,8 @@ export default function Cards({ name, price, image, id, rating }) {
                             variant="h6"
                             component="div"
                             style={{
-                                fontWeight: '700',
-                                fontSize: fontSizes.name, // Responsive font size for name
+                                fontWeight: '400', // Thinner font weight
+                                fontSize: fontSizes.name,
                                 color: '#333',
                                 fontFamily: 'Arial, sans-serif',
                             }}
@@ -104,8 +106,8 @@ export default function Cards({ name, price, image, id, rating }) {
                             variant="body1"
                             component="div"
                             style={{
-                                fontWeight: '600',
-                                fontSize: fontSizes.price, // Responsive font size for price
+                                fontWeight: '300', // Thinner font weight for price
+                                fontSize: fontSizes.price,
                                 color: 'rgba(243, 114, 157, 0.918)',
                                 marginBottom: '10px',
                             }}
@@ -114,13 +116,6 @@ export default function Cards({ name, price, image, id, rating }) {
                         </Typography>
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <BasicRating value={rating} />
-                            <Typography
-                                variant="body2"
-                                component="span"
-                                style={{ marginLeft: '5px', fontSize: fontSizes.rating, color: '#666', fontStyle: 'italic' }}
-                            >
-                                {rating} Stars
-                            </Typography>
                         </div>
                     </CardContent>
                 </CardActionArea>

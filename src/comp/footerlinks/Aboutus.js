@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
-
+import Navbarrer from '../Navbar/Nav';
 import Footer from '../Footer';
 const AboutUs = () => {
   return (
     <>
+        <Navbarrer/>
     <Box
       sx={{
        

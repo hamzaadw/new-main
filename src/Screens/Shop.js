@@ -8,7 +8,7 @@ import { db, auth } from '../configirations/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import BasicModal from '../comp/BasicModal';
 import { Divider } from 'antd';
-import moment from 'moment'; 
+import moment from 'moment';
 import Footer from '../comp/Footer';
 
 
@@ -63,12 +63,12 @@ function Shop() {
             setTrendingProducts(shuffledProducts.slice(0, 8));
 
             // Handle New Arrivals (filter for the latest month)
-            const currentDate = moment(); 
+            const currentDate = moment();
             const newArrivalsList = products.filter((product) => {
-                const productDate = moment(product.createdAt?.toDate()); 
-                return currentDate.diff(productDate, 'months') < 1; 
+                const productDate = moment(product.createdAt?.toDate());
+                return currentDate.diff(productDate, 'months') < 1;
             });
-            setNewArrivals(newArrivalsList.slice(0, 6)); 
+            setNewArrivals(newArrivalsList.slice(0, 6));
         };
 
         gettingProducts();
@@ -92,20 +92,24 @@ function Shop() {
             </div>
 
             {/* Trending Products */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-    {trendingProducts.map((v) => (
-        <Cards
-            view={view}
-            setOpen={setOpen}
-            id={v.id}
-            key={v.id}
-            image={v.image[0]}
-            name={v.name}
-            price={v.price}
-            rating={v.rating}
-        />
-    ))}
-</div>
+            <div style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+            }}>
+                {trendingProducts.map((v) => (
+                    <Cards
+                        view={view}
+                        setOpen={setOpen}
+                        id={v.id}
+                        key={v.id}
+                        image={v.image[0]}
+                        name={v.name}
+                        price={v.price}
+                        rating={v.rating}
+                    />
+                ))}
+            </div>
 
 
             <Divider />
@@ -130,7 +134,7 @@ function Shop() {
                 ))}
             </div>
 
-            <Footer/>
+            <Footer />
         </>
     );
 }

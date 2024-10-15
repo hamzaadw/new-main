@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import Footer from '../Footer';
+import Navbarrer from '../Navbar/Nav';
 const PrivacyPolicy = () => {
   return (
+    <>
+    <Navbarrer/>
     <Box
       sx={{
        
@@ -14,6 +17,7 @@ const PrivacyPolicy = () => {
       }}
     >
       <Container maxWidth="md">
+
         <Box 
           sx={{
             background: '#fff',
@@ -200,8 +204,9 @@ const PrivacyPolicy = () => {
           </Typography>
         </Box>
       </Container>
-      <Footer/>
     </Box>
+      <Footer/>
+    </>
   );
 };
 

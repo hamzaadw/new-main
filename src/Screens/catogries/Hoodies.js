@@ -41,7 +41,7 @@ function Hoodies() {
     <div>
       <Navbarrer />
 
-      <div className='container mt-5'>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }} className='container mt-5'>
      
         <div className='d-flex flex-wrap justify-content-center mt-5'>
           {products.length > 0 ? (
