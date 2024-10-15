@@ -34,7 +34,7 @@
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.14.2",
+    "sweetalert2": "^11.14.3",
     "web-vitals": "^2.1.4"
   },
   "homepage": "https://new-main-xfd9.vercel.app",
