@@ -5,35 +5,10 @@ import { db } from '../../../configirations/firebase';
 import { doc, updateDoc, getDoc, setDoc, arrayUnion } from "firebase/firestore";
 import { message } from 'antd';
 import Swal from 'sweetalert2';
-import { Navigate } from 'react-router-dom';
-const CustomTextField = styled(TextField)({
-  '& label.Mui-focused': {
-    color: '#f3729d',
-  },
-  '& .MuiInput-underline:after': {
-    borderBottomColor: '#f3729d',
-  },
-  '& .MuiOutlinedInput-root': {
-    '& fieldset': {
-      borderColor: '#ccc',
-    },
-    '&:hover fieldset': {
-      borderColor: '#f3729d',
-    },
-    '&.Mui-focused fieldset': {
-      borderColor: '#f3729d',
-    },
-  },
-});
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const CustomButton = styled(Button)({
-  backgroundColor: '#f3729d',
-  color: '#fff',
-  fontWeight: 'bold',
-  '&:hover': {
-    backgroundColor: '#d8074c',
-  },
-});
+const CustomTextField = styled(TextField)(/* your styling here */);
+const CustomButton = styled(Button)(/* your styling here */);
 
 const generateRandomString = () => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -57,6 +32,7 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -179,15 +155,22 @@ const Checkout = ({ uid, selectedProducts, paymentMethod }) => {
         console.log("Email sent successfully:", data);
 
         Swal.fire({
+          title: 'Success!',
+          text: 'Your order has been placed successfully!',
+          icon: 'success',
+          confirmButtonText: 'Okay'
+        });
+
+        navigate("/"); // Use navigate instead of Navigate for redirection
+
+      } catch (error) {
+        console.error("Error sending email:", error);
+        Swal.fire({
           title: 'Error!',
           text: 'Failed to place order. Please try again later.',
           icon: 'error',
           confirmButtonText: 'Okay'
         });
-     Navigate("/")
-  
-      } catch (error) {
-        console.error("Error sending email:", error);
       }
   
     } catch (error) {
