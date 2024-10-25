@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0875027b.css",
+    "main.js": "/static/js/main.a063d124.js",
+    "static/js/453.4297e0f3.chunk.js": "/static/js/453.4297e0f3.chunk.js",
+    "static/media/rep.png": "/static/media/rep.933294311cae25f5d2b5.png",
+    "static/media/dd.png": "/static/media/dd.180a75cfe6842618f38e.png",
+    "static/media/web-banner.png": "/static/media/web-banner.15365dc6688d6ccc8557.png",
+    "static/media/shiza_slider.webp": "/static/media/shiza_slider.360557daed25fbc2839d.webp",
+    "static/media/Trendy_-_Top_Banner.webp": "/static/media/Trendy_-_Top_Banner.3e7b73658f45952a30b7.webp",
+    "static/media/Black and White Man Clothes Logo (1).png": "/static/media/Black and White Man Clothes Logo (1).fe19438c8b48f20df62a.png",
+    "static/media/pic1.webp": "/static/media/pic1.40e1250878d649005283.webp",
+    "index.html": "/index.html",
+    "main.0875027b.css.map": "/static/css/main.0875027b.css.map",
+    "main.a063d124.js.map": "/static/js/main.a063d124.js.map",
+    "453.4297e0f3.chunk.js.map": "/static/js/453.4297e0f3.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0875027b.css",
+    "static/js/main.a063d124.js"
+  ]
+}
