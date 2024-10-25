@@ -23,9 +23,7 @@ const Footer = () => {
             <img style={{width:40, marginRight:15}} src={logo} alt="Logo" />
             Wave Thril
           </Typography>
-          <Typography variant="body2" sx={{ marginBottom: '10px' }}>
-            Here you can use rows and columns to organize your footer content. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          </Typography>
+      
         </Grid>
 
         <Grid item xs={12} md={3}>
@@ -71,6 +69,20 @@ const Footer = () => {
           >
             Privacy Policy
           </Typography>
+          <Typography 
+            sx={{ cursor: 'pointer', marginBottom: '5px' }} 
+            onClick={() => navigate('/Exchange')}
+          >
+      Exchange and Return policy
+          </Typography>
+          <Typography 
+            sx={{ cursor: 'pointer', marginBottom: '5px' }} 
+            onClick={() => navigate('/Shipping-policy')}
+          >
+Shipping Policy
+          </Typography>
+
+
         </Grid>
 
         <Grid item xs={12} md={3}>
@@ -87,12 +99,21 @@ const Footer = () => {
       </Grid>
 
       <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
-        <IconButton aria-label="facebook" sx={{ color: '#333', margin: '0 5px', transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-          <FaFacebookF />
-        </IconButton>
-        <IconButton aria-label="twitter" sx={{ color: '#333', margin: '0 5px', transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-          <FaTwitter />
-        </IconButton>
+      <IconButton 
+  aria-label="facebook" 
+  sx={{ 
+    color: '#333', 
+    margin: '0 5px', 
+    transition: 'transform 0.2s' 
+  }} 
+  onClick={() => window.location.href = 'https://www.instagram.com/wavethirl/'}
+  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+>
+  <FaFacebookF />
+</IconButton>
+
+  
         <IconButton aria-label="instagram" sx={{ color: '#333', margin: '0 5px', transition: 'transform 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
           <FaInstagram />
         </IconButton>

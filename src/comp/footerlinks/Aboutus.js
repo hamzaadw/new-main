@@ -2,69 +2,119 @@ import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import Navbarrer from '../Navbar/Nav';
 import Footer from '../Footer';
+
 const AboutUs = () => {
   return (
     <>
-        <Navbarrer/>
-    <Box
-      sx={{
-       
-        minHeight: '100vh', // Full height
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '40px 20px',
-      }}
-    >
-      <Container maxWidth="md">
-        <Box 
-          sx={{
-            background: '#fff',
-            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
-            borderRadius: '12px',
-            padding: '40px',
-            textAlign: 'center',
-          }}
-        >
-          <Typography 
-            variant="h3" 
+      <Navbarrer />
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: { xs: '20px', md: '40px' }, // Responsive padding
+          bgcolor: '#f5f5f5' // Light background color for contrast
+        }}
+      >
+        <Container maxWidth="md">
+          <Box
             sx={{
-              fontWeight: 'bold',
-              fontFamily: 'Lemon/Milk light, sans-serif', // Use a custom font
-              color: '#333',
-              marginBottom: '20px',
+              background: '#fff',
+              boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
+              borderRadius: '12px',
+              padding: { xs: '20px', md: '40px' },
+              textAlign: 'center',
             }}
           >
-            About Us
-          </Typography>
-          <Typography 
-            variant="body1" 
-            sx={{
-              fontSize: '1.2rem',
-              lineHeight: '1.8',
-              color: '#555', // Softer color for better readability
-              marginBottom: '10px',
-            }}
-          >
-            ONE is one of the largest fashion retail brands in Pakistan with its headquarters in Lahore.
-            It was founded in 2016 and has 42 shops spanning nationwide.
-          </Typography>
-          <Typography 
-            variant="body1" 
-            sx={{
-              fontSize: '1.2rem',
-              lineHeight: '1.8',
-              color: '#555',
-              marginTop: '20px',
-            }}
-          >
-            We master in producing high-end fashion, making trends accessible to all. The brand offers contemporary designs that fulfill the basic fashion needs of the masses. 
-            Our aim is to provide our customers with unique styles that drive confidence and boost their self-esteem.
-          </Typography>
-        </Box>
-      </Container>
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 'bold',
+                fontFamily: 'Lemon/Milk light, sans-serif',
+                color: '#333',
+                mb: 3,
+              }}
+            >
+              About Us
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                lineHeight: '1.8',
+                color: '#555',
+                mb: 2,
+              }}
+            >
+              Welcome to Wave Thirl, where style meets comfort! We’re thrilled to bring you high-quality, trendy clothing that’s designed to help you look and feel your best every day.
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: { xs: '1rem', md: '1.2rem' },
+                lineHeight: '1.8',
+                color: '#555',
+                mb: 2,
+              }}
+            >
+              Wave Thirl was created with a vision to make fashion accessible, fun, and effortlessly cool. Our collection is all about blending style and comfort in a way that’s both practical and eye-catching.
+            </Typography>
+            <Box sx={{ textAlign: 'left', mt: 3 }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
+                Why Choose Us?
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: { xs: '1rem', md: '1.2rem' },
+                  lineHeight: '1.8',
+                  color: '#555',
+                  mb: 2,
+                }}
+              >
+                At Wave Thirl, we’re committed to delivering premium clothing that speaks to your unique vibe. Our clothing line focuses on quality materials and designs that keep up with the latest trends without sacrificing comfort.
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: { xs: '1rem', md: '1.2rem' },
+                  lineHeight: '1.8',
+                  color: '#555',
+                }}
+              >
+                Plus, we believe in keeping things simple with hassle-free returns and exchanges, ensuring that you’re completely happy with every purchase.
+              </Typography>
+            </Box>
+            <Box sx={{ textAlign: 'left', mt: 3 }}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333' }}>
+                Join the Wave!
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: { xs: '1rem', md: '1.2rem' },
+                  lineHeight: '1.8',
+                  color: '#555',
+                }}
+              >
+                Wave Thirl isn’t just a brand—it’s a community of people who value self-expression, creativity, and authenticity.
+              </Typography>
+            </Box>
+            <Typography
+              variant="body1"
+              sx={{
+                fontWeight: 'bold',
+                color: 'rgba(243, 114, 157, 0.918)',
+                mt: 3,
+              }}
+            >
+              Let’s Make Waves Together!
+            </Typography>
+          </Box>
+        </Container>
       </Box>
-<Footer/>
+      <Footer />
     </>
   );
 };

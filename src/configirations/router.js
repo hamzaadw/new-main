@@ -27,7 +27,8 @@ import { auth } from '../configirations/firebase';
 
 import AboutUs from '../comp/footerlinks/Aboutus';
 import PrivacyPolicy from '../comp/footerlinks/Privicy';
-
+import Exchange from '../comp/footerlinks/Exchnage';
+import Shipping_policy from '../comp/footerlinks/Shipping policy';
 
 function Router() {
   const [userEmail, setUserEmail] = useState(null);
@@ -70,6 +71,8 @@ function Router() {
 
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/Exchange" element={<Exchange />} />
+          <Route path="/Shipping-policy" element={<Shipping_policy />} />
          
    
           <Route path="/T_shirts" element={<T_shirt />} />
