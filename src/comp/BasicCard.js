@@ -139,15 +139,7 @@ export default function MediaControlCard({ detail, uid }) {
                     <Divider style={{ margin: '20px 0' }} />
 
                     <div className='d-flex mt-4 mb-4' style={{ alignItems: 'center' }}>
-                        <span style={{
-                            marginRight: 10,
-                            textDecoration: 'line-through',
-                            color: 'grey',
-                            fontSize: '1.2rem',
-                            opacity: 0.8,
-                        }}>
-                            PKR 3000
-                        </span>
+                    
                         <Typography component="div" variant="h5" sx={{
                             color: '#D8074C',
                             fontWeight: 'bold',

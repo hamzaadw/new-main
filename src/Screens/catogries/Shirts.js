@@ -39,29 +39,33 @@ function Shirt() {
 
   return (
     <div>
-      <Navbarrer />
+    <Navbarrer />
+  
+      <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+          }}> 
 
-      <div className='container mt-5'>
-     
-        <div className='d-flex flex-wrap justify-content-center mt-5'>
-          {products.length > 0 ? (
-            products.map((product) => (
-              <div className='mx-2 mb-4' key={product.id}>
-                <Cards
-                  id={product.id}
-                  image={product.image[0]}
-                  name={product.name}
-                  price={product.price}
-                  rating={product.rating}
-                />
-              </div>
-            ))
-          ) : (
-            <p>No products found in this category.</p>
-          )}
-        </div>
+        {products.length > 0 ? (
+          products.map((product) => (
+          
+              <Cards
+               key={product.id}
+                id={product.id}
+                image={product.image[0]}
+                name={product.name}
+                price={product.price}
+                rating={product.rating}
+              />
+          
+          ))
+        ) : (
+          <p>No products found in this category.</p>
+        )}
       </div>
-    </div>
+    
+  </div>
   );
 }
 

@@ -33,7 +33,7 @@ export default function Cards({ name, price, image, id, rating }) {
         } else {
             setCardStyle({ width: '300px', height: 'auto', padding: '0' });
             setImageHeight('300px'); // Increase height for larger screens
-            setFontSizes({ name: '1.2rem', price: '1rem' });
+            setFontSizes({ name: '0.8rem', price: '1rem' });
             setRatingSize('medium'); // Default size for larger screens
         }
     };
@@ -47,15 +47,14 @@ export default function Cards({ name, price, image, id, rating }) {
     }, []);
 
     return (
-        <div style={{ ...cardStyle, margin: '1px' }}> {/* Add margin to create a gap between cards */}
+        <div style={{ ...cardStyle, margin: '1px', position: 'relative', zIndex: 1 }}> {/* Add margin to create a gap between cards */}
             <Card
                 style={{
                     width: '100%',
                     borderRadius: '0px',
                     border: '1px solid #000',
-                    boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+                    boxShadow: 'none', // Remove shadow to emphasize borders
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                    margin: '4px', // Add margin for spacing between card borders
                 }}
             >
                 <CardActionArea
