@@ -107,6 +107,7 @@ function Shop() {
                         name={v.name}
                         price={v.price}
                         rating={v.rating}
+                        soldProducts={v.soldProducts}
                     />
                 ))}
             </div>
@@ -130,6 +131,8 @@ function Shop() {
                         name={v.name}
                         price={v.price}
                         rating={v.rating}
+                        
+                        soldProducts={v.soldProducts}
                     />
                 ))}
             </div>

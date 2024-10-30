@@ -57,6 +57,7 @@ function Pant() {
                 name={product.name}
                 price={product.price}
                 rating={product.rating}
+                soldProducts={product.soldProducts}
               />
           
           ))

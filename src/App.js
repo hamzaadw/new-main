@@ -7,6 +7,7 @@ import { useState } from 'react';
 import CurrentUserId from './comp/context rating/RatingsContext';
 import Checkout from './comp/Dashboard/Cheakout/Checkout';
 import Navbarrer from './comp/Navbar/Nav';
+import AnnouncementBar from './comp/AnnouncementBar';
 
 
 function App() {
@@ -15,13 +16,14 @@ function App() {
 
   return (
 <>
+<AnnouncementBar/>
 
-<CurrentUserId.Provider  value={[value, setvalue]} >
+
 
 <Router/>
 
 
-</CurrentUserId.Provider >
+
 </>
   );
 }

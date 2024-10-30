@@ -5,9 +5,8 @@ import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { collection, addDoc, doc, updateDoc, Timestamp } from "firebase/firestore"; 
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db, storage } from '../configirations/firebase'; // Ensure the correct path to your Firestore config
+import { db, storage } from '../configirations/firebase';
 
-// Function to handle the selection of product size
 const handleSizeChange = (checkedValues, setFieldValue) => {
   setFieldValue('sizes', checkedValues);
 };
@@ -26,21 +25,17 @@ const normFile = (e) => {
 const submit = async (values) => {
   try {
     console.log('Starting file uploads...');
-    
-    // Upload each file to Firebase Storage
     const uploadPromises = values.upload.map(file => {
       const storageRef = ref(storage, `products/${file.originFileObj.name}`);
       const uploadTask = uploadBytesResumable(storageRef, file.originFileObj);
 
       return new Promise((resolve, reject) => {
         uploadTask.on('state_changed', 
-          (snapshot) => {
-            // Optional: You can use the snapshot to track upload progress
-          }, 
+          (snapshot) => {},
           (error) => {
             console.error("Error uploading file:", error);
             reject(error);
-          }, 
+          },
           async () => {
             const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             resolve(downloadURL);
@@ -49,28 +44,24 @@ const submit = async (values) => {
       });
     });
 
-    // Wait for all uploads to complete
     const uploadURLs = await Promise.all(uploadPromises);
 
     console.log('File upload successful, URLs:', uploadURLs);
 
-    // Add document to Firestore
     const docRef = await addDoc(collection(db, "Product"), {
       name: values.name,
       price: values.price,
       rating: values.rating,
       category: values.category,
       description: values.description,
-      image: uploadURLs, // Save the array of download URLs
-      sizes: values.sizes, // Save the selected sizes array
+      image: uploadURLs,
+      sizes: values.sizes,
+      soldProducts: values.soldProducts,
       productDate: Timestamp.now()
     });
 
     console.log("Document added with ID: ", docRef.id);
-
-    // Update the document with its own ID
     await updateDoc(doc(db, "Product", docRef.id), { id: docRef.id });
-
     console.log("Document updated with ID field");
 
   } catch (e) {
@@ -85,15 +76,17 @@ const AddItems = () => (
         <div>
           <h1>Add a new product</h1>
           <Formik
-            initialValues={{ category: '', name: '', price: '', rating: '', description: '', upload: [], sizes: [] }}
+            initialValues={{ category: '', name: '', price: '', rating: '', description: '', upload: [], sizes: [], soldProducts: '' }}
             validate={values => {
               const errors = {};
-              if (!values.name) {
-                errors.name = 'Required';
-              }
-              if (!values.price) {
-                errors.price = 'Required';
-              }
+              if (!values.name) errors.name = 'Required';
+              if (!values.price) errors.price = 'Required';
+              if (!values.rating) errors.rating = 'Required';
+              if (!values.category) errors.category = 'Required';
+              if (!values.description) errors.description = 'Required';
+              if (!values.upload.length) errors.upload = 'Required';
+              if (!values.sizes.length) errors.sizes = 'Required';
+              if (!values.soldProducts) errors.soldProducts = 'Required';
               return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
@@ -117,7 +110,7 @@ const AddItems = () => (
               isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
-                <Form.Item label="Item Name">
+                <Form.Item label="Item Name" help={errors.name && touched.name && errors.name}>
                   <Input
                     type="text"
                     name="name"
@@ -126,9 +119,8 @@ const AddItems = () => (
                     value={values.name}
                     placeholder="Enter item name"
                   />
-                  {errors.name && touched.name && <div>{errors.name}</div>}
                 </Form.Item>
-                <Form.Item label="Price">
+                <Form.Item label="Price" help={errors.price && touched.price && errors.price}>
                   <Input
                     type="number"
                     name="price"
@@ -137,9 +129,8 @@ const AddItems = () => (
                     value={values.price}
                     placeholder="Enter item price"
                   />
-                  {errors.price && touched.price && <div>{errors.price}</div>}
                 </Form.Item>
-                <Form.Item label="Rating">
+                <Form.Item label="Rating" help={errors.rating && touched.rating && errors.rating}>
                   <Input
                     type="number"
                     name="rating"
@@ -148,9 +139,8 @@ const AddItems = () => (
                     value={values.rating}
                     placeholder="Enter rating"
                   />
-                  {errors.rating && touched.rating && <div>{errors.rating}</div>}
                 </Form.Item>
-                <Form.Item label="Category">
+                <Form.Item label="Category" help={errors.category && touched.category && errors.category}>
                   <Select
                     onBlur={handleBlur}
                     value={values.category}
@@ -166,9 +156,8 @@ const AddItems = () => (
                       { value: 'Stitched', label: 'Stitched' },
                     ]}
                   />
-                  {errors.category && touched.category && <div>{errors.category}</div>}
                 </Form.Item>
-                <Form.Item label="Description">
+                <Form.Item label="Description" help={errors.description && touched.description && errors.description}>
                   <TextArea
                     rows={4}
                     name="description"
@@ -178,9 +167,7 @@ const AddItems = () => (
                     placeholder="Enter item description"
                   />
                 </Form.Item>
-
-                {/* Checkbox section for Sizes */}
-                <Form.Item label="Size">
+                <Form.Item label="Size" help={errors.sizes && touched.sizes && errors.sizes}>
                   <Checkbox.Group
                     options={[
                       { label: 'Small', value: 'Small' },
@@ -193,12 +180,17 @@ const AddItems = () => (
                     onChange={(checkedValues) => handleSizeChange(checkedValues, setFieldValue)}
                   />
                 </Form.Item>
-
-                <Form.Item
-                  label="Upload"
-                  valuePropName="fileList"
-                  getValueFromEvent={normFile}
-                >
+                <Form.Item label="Sold Products" help={errors.soldProducts && touched.soldProducts && errors.soldProducts}>
+                  <Input
+                    type="number"
+                    name="soldProducts"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.soldProducts}
+                    placeholder="Enter number of sold products"
+                  />
+                </Form.Item>
+                <Form.Item label="Upload" help={errors.upload && touched.upload && errors.upload}>
                   <Upload
                     listType="picture-card"
                     onChange={(info) => setFieldValue('upload', info.fileList)}
@@ -209,7 +201,6 @@ const AddItems = () => (
                     </div>
                   </Upload>
                 </Form.Item>
-
                 <Form.Item>
                   <Button type="primary" htmlType="submit" disabled={isSubmitting}>
                     Submit

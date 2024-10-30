@@ -108,8 +108,8 @@ export default function MediaControlCard({ detail, uid }) {
                                 key={index}
                                 component="img"
                                 sx={{
-                                    width: 60,
-                                    height: 60,
+                                    width: 40,
+                                    height: 40,
                                     objectFit: 'cover',
                                     cursor: 'pointer',
                                     border: selectedImage === img ? '2px solid #D8074C' : '2px solid transparent',

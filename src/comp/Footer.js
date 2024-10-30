@@ -90,10 +90,10 @@ Shipping Policy
             Contact
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: '5px' }}>
-            Email: <span style={{ cursor: 'pointer', color: '#333' }} onClick={() => window.location.href = 'mailto:Hamzaasadabcd@gmail.com'}>Hamzaasadabcd@gmail.com</span>
+            Email: <span style={{ cursor: 'pointer', color: '#333' }} onClick={() => window.location.href = 'mailto:dropshiping1000k@gmail.com'}>dropshiping1000k@gmail.com</span>
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: '5px' }}>
-            Phone: +01 234 567 88
+            Phone: 03141232633
           </Typography>
         </Grid>
       </Grid>
