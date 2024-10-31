@@ -155,11 +155,12 @@ export default function MediaControlCard({ detail, uid }) {
                         component="div"
                         sx={{
                             marginBottom: 3,
+                            whiteSpace: 'pre-line',
                             width: {
                                 xs: '100%',
                                 sm: '100%',
                                 md: '80%',
-                                lg: '500px',
+                                lg: '700px',
                             },
                             wordWrap: 'break-word',
                             textAlign: 'justify',
