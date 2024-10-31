@@ -23,7 +23,7 @@ export default function Cards({ name, price, image, id, rating, soldProducts }) 
         if (screenWidth <= 500) {
             setCardStyle({ width: 'calc(50% - 10px)', height: 'auto', padding: '5px' });
             setImageHeight('250px');
-            setFontSizes({ name: '0.8rem', price: '0.8rem' });
+            setFontSizes({ name: '0.9rem', price: '0.8rem' });
         } else if (screenWidth <= 600) {
             setCardStyle({ width: 'calc(50% - 20px)', height: 'auto', padding: '10px' });
             setImageHeight('270px');
@@ -31,7 +31,7 @@ export default function Cards({ name, price, image, id, rating, soldProducts }) 
         } else {
             setCardStyle({ width: '300px', height: 'auto', padding: '0' });
             setImageHeight('300px');
-            setFontSizes({ name: '0.8rem', price: '1rem' });
+            setFontSizes({ name: '1rem', price: '1rem' });
         }
     };
 

@@ -14,8 +14,7 @@ import Pant from '../Screens/catogries/Pant';
 import Hoodies from '../Screens/catogries/Hoodies';
 import T_shirt from '../Screens/catogries/T_shirt';
 import Shirt from '../Screens/catogries/Shirts';
-import Stitched from '../Screens/catogries/stiched';
-import Unstitched from '../Screens/catogries/Unstitched';
+
 import ForgotPassword from '../Screens/Forgotpass';
 import CanceledOrdersPage from '../comp/Dashboard/Cancelorderpage';
 import ProductDetails from '../Screens/Productdetails';
@@ -29,6 +28,11 @@ import AboutUs from '../comp/footerlinks/Aboutus';
 import PrivacyPolicy from '../comp/footerlinks/Privicy';
 import Exchange from '../comp/footerlinks/Exchnage';
 import Shipping_policy from '../comp/footerlinks/Shipping policy';
+
+import WShirt from '../Screens/catogries/Wshirts';
+import Wpants from '../Screens/catogries/Wpants';
+import WomenT_shirts from '../Screens/catogries/WT_shirts';
+import Whoodies from '../Screens/catogries/Whoodies';
 
 function Router() {
   const [userEmail, setUserEmail] = useState(null);
@@ -75,12 +79,17 @@ function Router() {
           <Route path="/Shipping-policy" element={<Shipping_policy />} />
          
    
+          <Route path="/WPants" element={<Wpants />} />
+          <Route path="/Wshirts" element={<WShirt />} />
+          <Route path="/WT_shirts" element={<WomenT_shirts />} />
+          <Route path="/WHoodies" element={<Whoodies />} />
+
+
           <Route path="/T_shirts" element={<T_shirt />} />
           <Route path="/Pants" element={<Pant />} />
           <Route path="/Hoodies" element={<Hoodies />} />
           <Route path="/shirts" element={<Shirt />} />
-          <Route path="/Stitched" element={<Stitched />} />
-          <Route path="/Unstitched" element={<Unstitched />} />
+   
 
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

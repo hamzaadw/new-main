@@ -104,19 +104,27 @@ const Navbarrer = () => {
                   </li>
 
                   {/* Women Link with Dropdown */}
-                  <li className="nav-item dropdown-hover" style={{ position: "relative" }}>
-                    <NavLink to="#" className="nav-link hover-bg" style={{ cursor: "pointer" }}>
-                      Women
-                    </NavLink>
-                    <div className="dropdown-content" style={dropdownStyle}>
-                      <MenuItem component={NavLink} to="/stitched" style={menuItemStyle}>
-                        <span className="dropdown-text">Stitched</span>
-                      </MenuItem>
-                      <MenuItem component={NavLink} to="/unstitched" style={menuItemStyle}>
-                        <span className="dropdown-text">Unstitched</span>
-                      </MenuItem>
-                    </div>
-                  </li>
+                 {/* Women Link with Dropdown */}
+<li className="nav-item dropdown-hover" style={{ position: "relative" }}>
+  <NavLink to="#" className="nav-link hover-bg" style={{ cursor: "pointer" }}>
+    Women
+  </NavLink>
+  <div className="dropdown-content" style={dropdownStyle}>
+    <MenuItem component={NavLink} to="/Wpants" style={menuItemStyle}>
+      <span className="dropdown-text">Women Pants</span>
+    </MenuItem>
+    <MenuItem component={NavLink} to="/Wt_shirts" style={menuItemStyle}>
+      <span className="dropdown-text">Women T-Shirts</span>
+    </MenuItem>
+    <MenuItem component={NavLink} to="/Wshirts" style={menuItemStyle}>
+      <span className="dropdown-text">Women Shirts</span>
+    </MenuItem>
+    <MenuItem component={NavLink} to="/Whoodies" style={menuItemStyle}>
+      <span className="dropdown-text">Women Hoodies</span>
+    </MenuItem>
+  </div>
+</li>
+
                 </ul>
               </div>
 
@@ -185,19 +193,31 @@ const Navbarrer = () => {
                 </ul>
 
                 {/* Women Section in Drawer */}
-                <h4>Women</h4>
-                <ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
-                  <li>
-                    <NavLink to="/stitched" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
-                      Stitched
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/unstitched" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
-                      Unstitched
-                    </NavLink>
-                  </li>
-                </ul>
+           {/* Women Section in Drawer */}
+<h4>Women</h4>
+<ul style={{ listStyleType: "none", padding: 0, margin: 0 }}>
+  <li>
+    <NavLink to="/Wpants" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
+      Women Pants
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="/Wt_shirts" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
+      Women T-Shirts
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="/Wshirts" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
+      Women Shirts
+    </NavLink>
+  </li>
+  <li>
+    <NavLink to="/Whoodies" onClick={() => setMenuOpen(false)} className="drawer-menu-item">
+      Women Hoodies
+    </NavLink>
+  </li>
+</ul>
+
               </div>
             </Drawer>
           </div>

@@ -148,12 +148,16 @@ const AddItems = () => (
                     style={{ width: 120 }}
                     onChange={(value) => handleChanger(value, setFieldValue)}
                     options={[
+                      { value: 'WomenPants', label: 'Women Pants' },
+                      { value: 'WomenT_shirts', label: 'Women T-Shirts' },
+                      { value: 'WomenShirts', label: 'Women Shirts' },
+                      { value: 'WomenHoodies', label: 'Women Hoodies' },
                       { value: 'Pants', label: 'Pants' },
                       { value: 'T_shirts', label: 'T_shirts' },
-                      { value: 'Unstitched', label: 'Unstitched' },
+                   
                       { value: 'Shirts', label: 'Shirts' },
                       { value: 'Hoodies', label: 'Hoodies' },
-                      { value: 'Stitched', label: 'Stitched' },
+                
                     ]}
                   />
                 </Form.Item>
