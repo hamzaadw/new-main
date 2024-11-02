@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../configirations/firebase';
 import Navbarrer from '../../comp/Navbar/Nav';
 import Cards from '../../comp/Cards';
-
+import Footer from '../../comp/Footer';
 function Wpants() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,7 +62,7 @@ function Wpants() {
             <p>No products found in this category.</p>
           )}
         </div>
-      
+      <Footer/>
     </div>
   );
 }

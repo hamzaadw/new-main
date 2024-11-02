@@ -3,6 +3,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../configirations/firebase';  // Ensure the correct path to your Firebase config
 import Navbarrer from '../../comp/Navbar/Nav';
 import Cards from '../../comp/Cards';
+import Footer from '../../comp/Footer';
 
 function Pant() {
   const [products, setProducts] = useState([]);  // State to store products
@@ -65,7 +66,7 @@ function Pant() {
           <p>No products found in this category.</p>
         )}
       </div>
-    
+    <Footer/>
   </div>
   );
 }

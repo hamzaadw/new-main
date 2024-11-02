@@ -42,11 +42,17 @@ const Footer = () => {
           <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/shirts')}>
             Shirts
           </Typography>
-          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/Stitched')}>
-            Women Unstitched Cloths
+          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/WHoodies')}>
+           Women Hoodies
           </Typography>
-          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/Unstitched')}>
-            Women Stitched Cloths
+          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/wshirts')}>
+            Women Shirts
+          </Typography>
+          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/wPants')}>
+            Women Pants
+          </Typography>
+          <Typography sx={{ cursor: 'pointer', marginBottom: '5px' }} onClick={() => navigate('/wT_shirts')}>
+            Women  T-Shirts
           </Typography>
         </Grid>
 

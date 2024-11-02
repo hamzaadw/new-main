@@ -3,7 +3,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../configirations/firebase';  // Ensure the correct path to your Firebase config
 import Navbarrer from '../../comp/Navbar/Nav';
 import Cards from '../../comp/Cards';
-
+import Footer from '../../comp/Footer';
 function T_shirt() {
   const [products, setProducts] = useState([]);  // State to store products
   const [loading, setLoading] = useState(true);  // State to handle loading
@@ -65,7 +65,7 @@ function T_shirt() {
           <p>No products found in this category.</p>
         )}
       </div>
-    
+    <Footer/>
   </div>
   );
 }

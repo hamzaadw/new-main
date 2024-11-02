@@ -8,6 +8,7 @@ import CurrentUserId from './comp/context rating/RatingsContext';
 import Checkout from './comp/Dashboard/Cheakout/Checkout';
 import Navbarrer from './comp/Navbar/Nav';
 import AnnouncementBar from './comp/AnnouncementBar';
+import Footer from './comp/Footer';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
 <Router/>
 
 
-
+{/* <Footer/> */}
 </>
   );
 }

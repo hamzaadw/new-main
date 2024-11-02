@@ -3,6 +3,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../configirations/firebase';
 import Navbarrer from '../../comp/Navbar/Nav';
 import Cards from '../../comp/Cards';
+import Footer from '../../comp/Footer';
 
 function Hoodies() {
   const [products, setProducts] = useState([]);
@@ -62,7 +63,7 @@ function Hoodies() {
             <p>No products found in this category.</p>
           )}
         </div>
-      
+<Footer/>      
     </div>
   );
 }
