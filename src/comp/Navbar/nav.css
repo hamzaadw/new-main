@@ -2,13 +2,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-.navbar .nav-link:hover {
+/* .navbar .nav-link:hover {
     color: rgba(10, 134, 134, 0.664) !important;
+} */
+
+
+/* Make navbar background transparent */
+.navbar, #navbarNav {
+  background-color: transparent !important;
+  box-shadow: none; /* Remove any shadow if needed */
+  border: none; /* Remove border if there's one */
 }
 
-.nav_bg{
-  background-color: #FFFFFF;
+.nav_bg {
+  background-color: transparent !important;
 }
+
+/* Additional styling for nav links and brand */
+.navbar .nav-link, .navbar-brand {
+  color: inherit; /* Inherit color for consistency */
+}
+
+/* Adjust hover effects to avoid background color change */
+.navbar .nav-link:hover, .btn-get-started:hover {
+  background: rgba(10, 134, 134, 0.664);
+  color: white;
+}
+
+/* Ensure other styles don't add background */
+.menu-button, .hover-bg {
+  background-color: transparent !important;
+}
+
 
 .navbar .nav-link {
     font-size: 1.2rem;
@@ -361,3 +386,6 @@ background: none;
 
 
 
+.nav_bg {
+  background-color: transparent !important;
+}

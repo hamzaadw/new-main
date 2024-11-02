@@ -14,13 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import BasicRating from './rating';
 import { Divider } from 'antd';
 import { MenuItem, FormControl, InputLabel, Select } from '@mui/material';
+import Swal from 'sweetalert2';
 
 export default function MediaControlCard({ detail, uid }) {
     const theme = useTheme();
     const isMediumOrLarger = useMediaQuery(theme.breakpoints.up('md'));
     const [open, setOpen] = React.useState(false);
     const [selectedImage, setSelectedImage] = React.useState(detail.image[0]);
-    const [selectedSize, setSelectedSize] = React.useState(''); // Track selected size
+    const [selectedSize, setSelectedSize] = React.useState('');
     let navigate = useNavigate();
 
     const addToCart = async () => {
@@ -30,12 +31,15 @@ export default function MediaControlCard({ detail, uid }) {
             return;
         }
 
-        // If sizes array contains "none", allow adding to cart without a selected size
         if (detail.sizes.includes('none')) {
-            // If sizes include 'none', set selectedSize to 'none'
             setSelectedSize('none');
         } else if (!selectedSize) {
-            alert("Please select a size before adding to the cart!");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Please select a size',
+                text: 'Select a size before adding to the cart!',
+                confirmButtonColor: '#D8074C'
+            });
             return;
         }
 
@@ -43,30 +47,19 @@ export default function MediaControlCard({ detail, uid }) {
             const cartRef = doc(db, "Cart", uid);
             const cartDoc = await getDoc(cartRef);
 
+            const productData = {
+                ProductId: detail.id,
+                ProductName: detail.name,
+                ProductDescription: detail.description,
+                ProductPrice: detail.price,
+                ProductImage: detail.image,
+                ProductSize: selectedSize,
+            };
+
             if (cartDoc.exists()) {
-                await updateDoc(cartRef, {
-                    Products: arrayUnion({
-                        ProductId: detail.id,
-                        ProductName: detail.name,
-                        ProductDescription: detail.description,
-                        ProductPrice: detail.price,
-                        ProductImage: detail.image,
-                        ProductSize: selectedSize, // Include the selected size
-                    })
-                });
+                await updateDoc(cartRef, { Products: arrayUnion(productData) });
             } else {
-                await setDoc(cartRef, {
-                    Products: [
-                        {
-                            ProductId: detail.id,
-                            ProductName: detail.name,
-                            ProductDescription: detail.description,
-                            ProductPrice: detail.price,
-                            ProductImage: detail.image,
-                            ProductSize: selectedSize, // Include the selected size
-                        }
-                    ]
-                });
+                await setDoc(cartRef, { Products: [productData] });
             }
 
             console.log("Product added to cart!");
@@ -92,8 +85,8 @@ export default function MediaControlCard({ detail, uid }) {
                     <CardMedia
                         component="img"
                         sx={{
-                            width: 310,  // Fixed width of 300px
-                            height: 500,  // Fixed height of 500px
+                            width: 340,
+                            height: 500,
                             objectFit: 'cover',
                             borderTopLeftRadius: '20px',
                             marginBottom: 2
@@ -139,7 +132,6 @@ export default function MediaControlCard({ detail, uid }) {
                     <Divider style={{ margin: '20px 0' }} />
 
                     <div className='d-flex mt-4 mb-4' style={{ alignItems: 'center' }}>
-                    
                         <Typography component="div" variant="h5" sx={{
                             color: '#D8074C',
                             fontWeight: 'bold',
@@ -149,38 +141,28 @@ export default function MediaControlCard({ detail, uid }) {
                         </Typography>
                     </div>
 
-                    <Typography
-                        variant="subtitle1"
-                        color="text.secondary"
-                        component="div"
-                        sx={{
-                            marginBottom: 3,
-                            whiteSpace: 'pre-line',
-                            width: {
-                                xs: '100%',
-                                sm: '100%',
-                                md: '80%',
-                                lg: '700px',
-                            },
-                            wordWrap: 'break-word',
-                            textAlign: 'justify',
-                        }}
-                    >
-                        <h6
-                            style={{
-                                fontWeight: 'bold',
-                                marginBottom: 8,
-                                color: '#555',
-                            }}
-                        >
+                    <Typography variant="subtitle1" color="text.secondary" component="div" sx={{
+                        marginBottom: 3,
+                        whiteSpace: 'pre-line',
+                        width: {
+                            xs: '100%',
+                            sm: '100%',
+                            md: '80%',
+                            lg: '700px',
+                        },
+                        wordWrap: 'break-word',
+                        textAlign: 'justify',
+                    }}>
+                        <h6 style={{
+                            fontWeight: 'bold',
+                            marginBottom: 8,
+                            color: '#555',
+                        }}>
                             Product Detail:
                         </h6>
                         {detail.description}
                     </Typography>
 
-
-
-                    {/*   // Size Dropdown */}
                     {!(detail.sizes && detail.sizes.includes('None')) && detail.sizes.length > 0 ? (
                         <FormControl fullWidth sx={{ marginBottom: 3, width: 200 }}>
                             <InputLabel id="size-label">Select Size</InputLabel>
@@ -196,8 +178,6 @@ export default function MediaControlCard({ detail, uid }) {
                             </Select>
                         </FormControl>
                     ) : null}
-
-
 
                     <Divider style={{ margin: '20px 0' }} />
 

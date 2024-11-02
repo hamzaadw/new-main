@@ -27,15 +27,19 @@ function Cart() {
   const getCart = async (uid) => {
     const docRef = doc(db, "Cart", uid);
     const docSnap = await getDoc(docRef);
-
+  
     if (docSnap.exists()) {
       const data = docSnap.data();
       const Cartitem = data.Products || [];
+      // Sort Cartitem in descending order based on ProductId
+      Cartitem.sort((a, b) => b.ProductId.localeCompare(a.ProductId));
       setCartProducts(Cartitem);
     } else {
       console.log("No such document!");
     }
   };
+  
+  
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -176,14 +180,18 @@ function Cart() {
               Total: PKR {formatPrice(totalPrice.toFixed(2))}
             </Typography>
             <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
-              Delivery: PKR {formatPrice(deliveryFee)}
+              Delivery: Free
+              {/* Delivery: PKR {formatPrice(deliveryFee)} */}
             </Typography>
             <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
+              SubTotal: PKR {formatPrice(totalPrice.toFixed(2))}
+            </Typography>
+            {/* <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
               SubTotal: PKR {formatPrice(calculateSubtotal().toFixed(2))}
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
+            </Typography> */}
+            {/* <Typography variant="h6" sx={{ fontWeight: 'bold', marginBottom: '1rem', fontFamily: 'Roboto, sans-serif' }}>
               Tax included and shipping calculated at checkout
-            </Typography>
+            </Typography> */}
             <Button
               onClick={() => setTrue(true)}
               variant="contained"

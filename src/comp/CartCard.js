@@ -7,13 +7,16 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartCard({ products, updateTotalPrice, showQuantity = true, showCheckbox = true }) {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [checked, setChecked] = React.useState(false);
   const [count, setCount] = React.useState(1);
 
   const handleCheckbox = (e) => {
+    e.stopPropagation(); // Prevent navigation on checkbox click
     const isChecked = e.target.checked;
     setChecked(isChecked);
     
@@ -22,6 +25,10 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
       ProductId: products.ProductId,
       ProductSize: products.ProductSize, // Add this line to send the selected size
     });
+  };
+
+  const handleCardClick = () => {
+    navigate(`/product/${products.ProductId}`); // Navigate to product detail page
   };
 
   return (
@@ -39,17 +46,21 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
           }}
         />
       )}
-      <Card sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%',
-        height: '150px',
-        flexWrap: 'wrap',
-        '@media (max-width: 600px)': {
-          flexDirection: 'column',
-          height: 'auto',
-        },
-      }}>
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          height: '150px',
+          flexWrap: 'wrap',
+          cursor: 'pointer', // Add pointer cursor for visual indication
+          '@media (max-width: 600px)': {
+            flexDirection: 'column',
+            height: 'auto',
+          },
+        }}
+        onClick={handleCardClick} // Trigger navigation on card click
+      >
         <CardMedia
           component="img"
           sx={{
@@ -76,8 +87,7 @@ export default function CartCard({ products, updateTotalPrice, showQuantity = tr
             <Typography style={{ marginTop: 10 }} variant="subtitle1" color="textPrimary" component="div">
               PKR. {products.ProductPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             </Typography>
-            {/* Display the size field here */}
-            {products.ProductSize && ( // Check if ProductSize exists
+            {products.ProductSize && (
               <Typography variant="body2" color="textSecondary" component="div" style={{ marginTop: 5 }}>
                 Size: {products.ProductSize}
               </Typography>
