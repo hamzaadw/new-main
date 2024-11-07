@@ -51,6 +51,7 @@ const submit = async (values) => {
     const docRef = await addDoc(collection(db, "Product"), {
       name: values.name,
       price: values.price,
+      Fakeprice: values.fakeprice,
       rating: values.rating,
       category: values.category,
       description: values.description,
@@ -80,6 +81,7 @@ const AddItems = () => (
             validate={values => {
               const errors = {};
               if (!values.name) errors.name = 'Required';
+              if (!values.fakeprice) errors.fakeprice = 'Required';
               if (!values.price) errors.price = 'Required';
               if (!values.rating) errors.rating = 'Required';
               if (!values.category) errors.category = 'Required';
@@ -130,6 +132,24 @@ const AddItems = () => (
                     placeholder="Enter item price"
                   />
                 </Form.Item>
+                <Form.Item label="Fakeprice" help={errors.fakeprice && touched.price && errors.fakeprice}>
+                  <Input
+                    type="number"
+                    name="fakeprice"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.fakeprice}
+                    placeholder="Enter item price"
+                  />
+                </Form.Item>
+
+
+
+
+
+
+
+                
                 <Form.Item label="Rating" help={errors.rating && touched.rating && errors.rating}>
                   <Input
                     type="number"

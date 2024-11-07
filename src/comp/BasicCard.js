@@ -52,6 +52,7 @@ export default function MediaControlCard({ detail, uid }) {
                 ProductName: detail.name,
                 ProductDescription: detail.description,
                 ProductPrice: detail.price,
+                ProductFakePrice: detail.Fakeprice,
                 ProductImage: detail.image,
                 ProductSize: selectedSize,
             };
@@ -132,6 +133,19 @@ export default function MediaControlCard({ detail, uid }) {
                     <Divider style={{ margin: '20px 0' }} />
 
                     <div className='d-flex mt-4 mb-4' style={{ alignItems: 'center' }}>
+
+                    <Typography component="div" variant="span" sx={{
+                            color: 'grey',
+                            textDecoration:"line-through",
+                            letterSpacing: '0.03em',
+                            marginRight:2
+                        }}>
+                            PKR {detail.Fakeprice}
+                        </Typography>
+
+
+
+
                         <Typography component="div" variant="h5" sx={{
                             color: '#D8074C',
                             fontWeight: 'bold',
