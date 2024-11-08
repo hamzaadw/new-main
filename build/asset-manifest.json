@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.0875027b.css",
-    "main.js": "/static/js/main.d373f09d.js",
+    "main.js": "/static/js/main.850039e0.js",
     "static/js/453.4297e0f3.chunk.js": "/static/js/453.4297e0f3.chunk.js",
     "static/media/rep.png": "/static/media/rep.933294311cae25f5d2b5.png",
     "static/media/dd.png": "/static/media/dd.180a75cfe6842618f38e.png",
@@ -12,11 +12,11 @@
     "static/media/Black and White Man Clothes Logo (1).png": "/static/media/Black and White Man Clothes Logo (1).fc0b4ad15a4312004f3d.png",
     "index.html": "/index.html",
     "main.0875027b.css.map": "/static/css/main.0875027b.css.map",
-    "main.d373f09d.js.map": "/static/js/main.d373f09d.js.map",
+    "main.850039e0.js.map": "/static/js/main.850039e0.js.map",
     "453.4297e0f3.chunk.js.map": "/static/js/453.4297e0f3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0875027b.css",
-    "static/js/main.d373f09d.js"
+    "static/js/main.850039e0.js"
   ]
 }
