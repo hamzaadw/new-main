@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import BasicRating from './rating';
 
-export default function Cards({ name, price, image, id, rating, soldProducts }) {
+export default function Cards({ name, price, image, id, rating, soldProducts, Fakeprice }) {
     const navigate = useNavigate();
     const [cardStyle, setCardStyle] = useState({ width: '300px', height: 'auto', padding: '0' });
     const [fontSizes, setFontSizes] = useState({
@@ -100,6 +100,11 @@ export default function Cards({ name, price, image, id, rating, soldProducts }) 
                         >
                             {name}
                         </Typography>
+
+
+
+
+
                         <Typography
                             variant="body1"
                             style={{
@@ -107,10 +112,34 @@ export default function Cards({ name, price, image, id, rating, soldProducts }) 
                                 fontSize: fontSizes.price,
                                 color: 'rgba(243, 114, 157, 0.918)',
                                 margin: '0',
+                                display:"flex"
                             }}
                         >
+
+
+               
+
+
+
                             RS. {price}
                         </Typography>
+
+
+
+                        <Typography
+                                variant="body1"
+                                style={{
+                                    fontWeight: '300',
+                                    fontSize: "12px",
+                                    color: '#808080',
+                                    margin: '0',
+                                    textDecoration: "line-through"
+                                }}
+                            >
+                                RS. {Fakeprice}
+                            </Typography>
+
+
                         <div style={{ display: 'flex', alignItems: 'center' }}>
                             <BasicRating value={rating} size={ratingSize} style={{ fontSize: '0px' }} /> {/* Set rating size to 10px */}
                             <Typography variant="body2" style={{ marginLeft: '4px', color: '#555', fontSize: '10px' }}>

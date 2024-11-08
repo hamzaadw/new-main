@@ -54,6 +54,7 @@ function Shop() {
             const querySnapshot = await getDocs(q);
             const products = [];
             querySnapshot.forEach((doc) => {
+                console.log(doc.data())
                 products.push({ id: doc.id, ...doc.data() });
             });
             setData(products);
@@ -108,6 +109,7 @@ function Shop() {
                         price={v.price}
                         rating={v.rating}
                         soldProducts={v.soldProducts}
+                        Fakeprice={v.Fakeprice}
                     />
                 ))}
             </div>
@@ -133,6 +135,7 @@ function Shop() {
                         rating={v.rating}
                         
                         soldProducts={v.soldProducts}
+                        Fakeprice={v.Fakeprice}
                     />
                 ))}
             </div>

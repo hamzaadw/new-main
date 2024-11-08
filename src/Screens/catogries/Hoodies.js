@@ -56,6 +56,7 @@ function Hoodies() {
                   price={product.price}
                   rating={product.rating}
                   soldProducts={product.soldProducts}
+                  Fakeprice={product.Fakeprice}
                 />
             
             ))
